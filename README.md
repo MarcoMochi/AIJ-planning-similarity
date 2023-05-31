@@ -6,4 +6,6 @@ Installation instructions for different Operating Systems building from sources 
 There are 3 main folders:
  - src: containing the python code for the translation
  - input: containing the graphs files
- - translations: containing 2 sub-folders for the ASP model obtaining with and without preprocessing
+ - translation: containing 2 sub-folders for the ASP model obtaining with and without preprocessing
+
+To run one of the ASP model from the root folder can be used: clingo translation/{preprocessing}{no-preprocessing}/filename.asp -t 4
