@@ -74,6 +74,7 @@ graph2 = []
 elements = []
 type_g1 = {}
 type_g2 = {}
+empty = False
 
 
 def extract_numbers(value):
@@ -91,7 +92,7 @@ def check_existence(graph, label, relation):
 
 
 def read_graphs(path, preprocessing):
-    global g1, g2
+    global g1, g2, empty
     with open(path, 'r') as f:
         lines = f.readlines()
         assert len(lines) > 0, "Input file is empty"
@@ -154,8 +155,8 @@ def read_graphs(path, preprocessing):
                                          type_node=predicate, name=params[0],
                                          notes=('empty', 'empty')))
 
+
                 else:
-                    if len(value) > 0:
                         try:
                             elements.append([value, type_g2[str(len(nodes_graph_2))]])
                             if preprocessing:
@@ -178,6 +179,7 @@ def read_graphs(path, preprocessing):
                                     Node(identifier=len(nodes_graph_2), original=1, graph=g2, elements=value,
                                          type_node=predicate, name=params[0],
                                          notes=('empty', 'empty')))
+
             elif mode == 2 or mode == 4:
                 res = line.split(";")
                 if len(res) != 4:
@@ -223,7 +225,8 @@ def add_nodes(nodes_graph_i, nodes_graph_j, graph, preprocessing):
     for node1 in nodes_graph_i:
         found = False
         for node2 in nodes_graph_j:
-            if node1.elements.value == node2.elements.value and node1.name.value == node2.name.value and node1.type_node.value == node2.type_node.value:
+            if preprocessing and node1.elements.value == node2.elements.value and node1.name.value == node2.name.value and \
+                    node1.type_node.value == node2.type_node.value:
                 found = True
                 break
         if not found:
@@ -249,6 +252,7 @@ def add_nodes_ctl(preprocessing):
 
 
 def translate_pre():
+    global empty
     p = Problem()
 
     for node1 in nodes_graph_1:
@@ -334,7 +338,6 @@ def translate_no_pre():
     p = Problem()
     elements_op = [el[0] for el in elements if el[1] == operator]
     elements_pr = [el[0] for el in elements if el[1] == predicate]
-
     elements_op = list(set(elements_op))
     for i, element1 in enumerate(elements_op):
         for element2 in elements_op[i + 1:]:
@@ -518,6 +521,7 @@ if __name__ == '__main__':
     parser.add_argument("-pp", "--preprocessing", help="activate the preprocessing", action="store_true")
     parser.add_argument("-s", "--solution", help="activate the run of the clingo process to find a solution",
                         action="store_true")
+
     args = parser.parse_args()
 
     sys.exit(main(args))
