@@ -424,17 +424,18 @@ def write_encoding(path, p):
 
 
 def run_process(p, path):
+    print("Starting search")
     solver = SolverWrapper(solver_path="/opt/homebrew/bin/clingo")
-    res = solver.solve(problem=p, options=["-t 4"])
-    res = solver.solve(problem=p, timeout=30)
+    res = solver.solve(problem=p, options=["-t 4"], timeout=30)
     solution = ""
 
 
     if solver.killed:
         print("Timed out!")
-        exit(1)
+        if res.status != Result.HAS_SOLUTION:
+            exit(1)
     if res.status == Result.HAS_SOLUTION:
-        assert(len(res.answers) >= 1)
+        assert (len(res.answers) >= 1), "There is no answer"
         answer = res.answers[0]
         for i in res.answers:
             if not i.optimal:
@@ -492,7 +493,7 @@ def run_process(p, path):
                         solution += (f"Add edge of type {assignment.label} in {assignment.graph} from {nodes_graph_2[assignment.node1.value].name} to {nodes_graph_2[assignment.node2.value].name} with the relations {assignment.relation.value} \n")
 
     elif res.status != Result.NO_SOLUTION:
-        print("Cannot found a solution in less than 100 seconds")
+        print("Cannot found a solution in less than 30 seconds")
     else:
         print("No solution found!")
 

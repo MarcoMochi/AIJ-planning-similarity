@@ -1,0 +1,40 @@
+Map node "turn_to" of type "Operator" with elements "D1,D2,S1" of "../problems-mcrx-j/satellite/domain.pddl" to node "turn_to" of type "Operator" with elements "D1,D2,S1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "pointing" of type "Predicate" with elements "D1,S1" of "../problems-mcrx-j/satellite/domain.pddl" to node "pointing" of type "Predicate" with elements "D1,S1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "on_board" of type "Predicate" with elements "I1,S1" of "../problems-mcrx-j/satellite/domain.pddl" to node "on_board" of type "Predicate" with elements "I1,S1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "switch_on" of type "Operator" with elements "I1,S1" of "../problems-mcrx-j/satellite/domain.pddl" to node "switch_on" of type "Operator" with elements "I1,S1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "power_avail" of type "Predicate" with elements "S1" of "../problems-mcrx-j/satellite/domain.pddl" to node "power_avail" of type "Predicate" with elements "S1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "power_on" of type "Predicate" with elements "I1" of "../problems-mcrx-j/satellite/domain.pddl" to node "power_on" of type "Predicate" with elements "I1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "calibrated" of type "Predicate" with elements "I1" of "../problems-mcrx-j/satellite/domain.pddl" to node "calibrated" of type "Predicate" with elements "I1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "switch_off" of type "Operator" with elements "I1,S1" of "../problems-mcrx-j/satellite/domain.pddl" to node "switch_off" of type "Operator" with elements "I1,S1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "calibrate" of type "Operator" with elements "D1,I1,S1" of "../problems-mcrx-j/satellite/domain.pddl" to node "calibrate" of type "Operator" with elements "D1,I1,S1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "calibration_target" of type "Predicate" with elements "D1,I1" of "../problems-mcrx-j/satellite/domain.pddl" to node "calibration_target" of type "Predicate" with elements "D1,I1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "take_image" of type "Operator" with elements "D1,I1,M1,S1" of "../problems-mcrx-j/satellite/domain.pddl" to node "take_image" of type "Operator" with elements "D1,I1,M1,S1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "supports" of type "Predicate" with elements "I1,M1" of "../problems-mcrx-j/satellite/domain.pddl" to node "supports" of type "Predicate" with elements "I1,M1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "have_image" of type "Predicate" with elements "D1,M1" of "../problems-mcrx-j/satellite/domain.pddl" to node "have_image" of type "Predicate" with elements "D1,M1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "turn_to_mcr_take_image" of type "Operator" with elements "D1,D2,I1,M1,S1" of "../problems-mcrx-j/satellite/domain.pddl" to node "turn_to_mcr_take_image" of type "Operator" with elements "D1,D2,I1,M1,S1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "stag_have_image" of type "Predicate" with elements "D1,M1" of "../problems-mcrx-j/satellite/domain.pddl" to node "stag_have_image" of type "Predicate" with elements "D1,M1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Map node "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" of type "Operator" with elements "D1,D2,I1,M1,S1" of "../problems-mcrx-j/satellite/domain.pddl" to node "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" of type "Operator" with elements "D1,D2,I1,M1,S1" of "../problems-mcrx-j/satellite/domain_mum.pddl" 
+Add node "turn_to_mcr_take_image" of type "Operator" with elements "D1,D2,I1,M1,S1" in "../problems-mcrx-j/satellite/domain.pddl" 
+Add node "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" of type "Operator" with elements "D1,D2,I1,M1,S1" in "../problems-mcrx-j/satellite/domain.pddl" 
+Add node "stag_have_image" of type "Predicate" with elements "D1,M1" in "../problems-mcrx-j/satellite/domain.pddl" 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "turn_to_mcr_take_image" to "pointing" with the relations Sa1=Sb1,Da2=Db3 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "turn_to_mcr_take_image" to "power_on" with the relations Ia1=Ib4 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "turn_to_mcr_take_image" to "calibrated" with the relations Ia1=Ib4 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "turn_to_mcr_take_image" to "on_board" with the relations Ia1=Ib4,Sa2=Sb1 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "turn_to_mcr_take_image" to "supports" with the relations Ia1=Ib4,Ma2=Mb5 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "turn_to_mcr_take_image" to "stag_have_image" with the relations Da1=Db2,Ma2=Mb5 
+Add edge of type "add" in "../problems-mcrx-j/satellite/domain.pddl" from "turn_to_mcr_take_image" to "pointing" with the relations Sa1=Sb1,Da2=Db2 
+Add edge of type "add" in "../problems-mcrx-j/satellite/domain.pddl" from "turn_to_mcr_take_image" to "have_image" with the relations Da1=Db2,Ma2=Mb5 
+Add edge of type "del" in "../problems-mcrx-j/satellite/domain.pddl" from "turn_to_mcr_take_image" to "pointing" with the relations Sa1=Sb1,Da2=Db3 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "on_board" with the relations Ia1=Ib1,Sa2=Sb2 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "power_avail" with the relations Sa1=Sb2 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "calibration_target" with the relations Ia1=Ib1,Da2=Db3 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "pointing" with the relations Sa1=Sb2,Da2=Db3 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "supports" with the relations Ia1=Ib1,Ma2=Mb5 
+Add edge of type "pre" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "stag_have_image" with the relations Da1=Db4,Ma2=Mb5 
+Add edge of type "add" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "power_on" with the relations Ia1=Ib1 
+Add edge of type "add" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "calibrated" with the relations Ia1=Ib1 
+Add edge of type "add" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "pointing" with the relations Sa1=Sb2,Da2=Db4 
+Add edge of type "add" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "have_image" with the relations Da1=Db4,Ma2=Mb5 
+Add edge of type "del" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "power_avail" with the relations Sa1=Sb2 
+Add edge of type "del" in "../problems-mcrx-j/satellite/domain.pddl" from "switch_on_mcr_calibrate_mcr_turn_to_mcr_take_image" to "pointing" with the relations Sa1=Sb2,Da2=Db3 
