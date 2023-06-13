@@ -497,7 +497,7 @@ def run_process(p, path):
     else:
         print("No solution found!")
 
-    with open(path.split(".")[0] + "_solution.txt", "w") as w:
+    with open(path.rsplit(".", 1)[0] + "_solution.txt", "w") as w:
         w.write(solution)
 
 
