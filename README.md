@@ -9,3 +9,6 @@ There are 3 main folders:
  - translation: containing 2 sub-folders for the ASP model obtaining with and without preprocessing
 
 To run one of the ASP model from the root folder can be used: clingo translation/{preprocessing}{no-preprocessing}/filename.asp -t 4
+
+To get one ASP model from the root folder can be used: python src/encode_asp.py -i ./input/Satellite.gr -o ./Satellite.asp --preprocessing
+To obtain the solution for the inspected planning domains can be used: python src/encode_asp.py -i ./input/Satellite.gr -o ./Satellite.asp --preprocessing --solution
