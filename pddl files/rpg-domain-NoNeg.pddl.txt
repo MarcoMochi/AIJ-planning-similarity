@@ -1,0 +1,122 @@
+(define (domain RPG)
+
+    (:requirements
+        :strips
+        :typing
+        :negative-preconditions
+    )
+
+    (:types
+        location locatable - object
+        sword agent - locatable
+    )
+
+    (:constants
+
+    )
+
+    (:predicates
+        (in ?obj - locatable ?loc - location)
+        (connected ?loc1 ?loc2 - location)
+        
+        (has-sword ?ag)
+        (hands-free ?ag)
+        
+        (destroyed ?loc - location)
+    	(complete ?loc - location)
+        (has-trap ?loc - location)
+        (has-exit ?loc - location)
+        (has-monster ?loc - location)
+        (free-trap ?loc - location)
+        (free-monster ?loc - location)
+        
+        (goal)
+    )
+    
+    (:action move-with-sword
+        :parameters (?ag - agent ?loc1 ?loc2 - location)
+        :precondition (and
+            (complete ?loc2)
+            (free-trap ?loc1)
+            (connected ?loc1 ?loc2)
+            (in ?ag ?loc1)
+            (has-sword ?ag)
+        )
+        :effect (and
+            (not (in ?ag ?loc1))
+            (in ?ag ?loc2)
+            (destroyed ?loc1)
+            (not (complete ?loc1))
+        )
+    )
+    
+    (:action move-without-sword
+        :parameters (?ag - agent ?loc1 ?loc2 - location)
+        :precondition (and
+            (complete ?loc2)
+           (free-trap ?loc1)
+            (free-monster ?loc2)
+            (hands-free  ?ag)
+            (connected ?loc1 ?loc2)
+            (in ?ag ?loc1)
+        )
+        :effect (and
+            (not (in ?ag ?loc1))
+            (in ?ag ?loc2)
+            (destroyed ?loc1) (not (complete ?loc1))
+        )
+    )
+
+    (:action pickup-sword
+        :parameters (?ag - agent ?sw - sword ?loc - location)
+        :precondition (and
+           (free-trap ?loc)
+            (in ?ag ?loc)
+            (in ?sw ?loc)
+        )
+            
+        :effect (and
+            (not (in ?sw ?loc))
+            (not (hands-free ?ag))
+            (has-sword ?ag)
+        )
+    )
+    
+    (:action destroy-sword
+        :parameters (?ag - agent ?sw - sword ?loc - location)
+        :precondition (and
+            (free-monster ?loc)
+            (free-trap ?loc)
+            (in ?ag ?loc)
+            (has-sword ?ag)
+        )
+        :effect (and
+            (not (has-sword ?ag))
+            (hands-free ?ag)
+        )
+    )
+    
+    (:action disarm-trap
+        :parameters (?ag - agent ?loc - location)
+        :precondition (and
+            (in ?ag ?loc)
+            (has-trap ?loc)
+            (hands-free ?ag)
+        )
+        :effect (and
+            (not (has-trap ?loc)) (free-trap ?loc)
+        )
+    )
+    
+    (:action exit
+        :parameters (?ag - agent ?loc - location)
+        :precondition (and
+            (in ?ag ?loc)
+            (has-exit ?loc)
+        )
+        :effect (and
+            (goal)
+        )
+    )
+    
+)
