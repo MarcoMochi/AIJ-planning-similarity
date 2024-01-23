@@ -1,5 +1,5 @@
-# Comparing Planning Domain Models using Answer Set Programming
- Code and Experiments for the paper "Comparing Planning Domain Models using Answer Set Programming"
+# AIJ - Paper
+ Code and Experiments for the paper ""
 
 Installation instructions for different Operating Systems building from sources or using Anaconda for Clingo can be found here: https://github.com/potassco/clingo/blob/master/INSTALL.md, https://potassco.org/clingo/, https://github.com/potassco/clingo/releases/
 

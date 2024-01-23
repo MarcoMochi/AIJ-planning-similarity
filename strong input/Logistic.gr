@@ -1,0 +1,48 @@
+% Name-1
+logistics1.pddl
+% Edges-1
+0;3;Tx1=Ty2,Lx2=Ly3;pre
+0;4;Px1=Py1,Lx2=Ly3;pre
+0;4;Px1=Py1,Lx2=Ly3;del
+0;5;Px1=Py1,Tx2=Ty2;add
+1;3;Tx1=Ty2,Lx2=Ly3;pre
+1;5;Px1=Py1,Tx2=Ty2;pre
+1;5;Px1=Py1,Tx2=Ty2;del
+1;4;Px1=Py1,Lx2=Ly3;add
+2;3;Tx1=Ty1,Lx2=Ly2;pre
+2;6;Lx1=Ly2,Cx2=Cy4;pre
+2;6;Lx1=Ly3,Cx2=Cy4;pre
+2;3;Tx1=Ty1,Lx2=Ly2;del
+2;3;Tx1=Ty1,Lx2=Ly3;add
+% Nodes-1
+Load(Py1,Ty2,Ly3)
+Unload(Py1,Ty2,Ly3)
+move(Ty1,Ly2,Ly3,Cy4)
+at-t(Tx1,Lx2)
+at-p(Px1,Lx2)
+in-p(Px1,Tx2)
+in-city(Lx1,Cx2)
+% Name-2
+logistics1_2.pddl
+% Edges-2
+0;3;Tx1=Ty2,Lx2=Ly3;pre
+0;4;Px1=Py1,Lx2=Ly3;pre
+0;4;Px1=Py1,Lx2=Ly3;del
+0;5;Px1=Py1,Tx2=Ty2;add
+1;3;Tx1=Ty2,Lx2=Ly3;pre
+1;5;Px1=Py1,Tx2=Ty2;pre
+1;5;Px1=Py1,Tx2=Ty2;del
+1;4;Px1=Py1,Lx2=Ly3;add
+2;3;Tx1=Ty1,Lx2=Ly2;pre
+2;6;Lx1=Ly2,Cx2=Cy4;pre
+2;6;Lx1=Ly3,Cx2=Cy4;pre
+2;3;Tx1=Ty1,Lx2=Ly2;del
+2;3;Tx1=Ty1,Lx2=Ly3;add
+% Nodes-2
+Load-changed(Py1,Ty2,Ly3)
+Unload-changed(Py1,Ty2,Ly3)
+move-changed(Ty1,Ly2,Ly3,Cy4)
+at-t-changed(Tx1,Lx2)
+at-p-changed(Px1,Lx2)
+in-p-changed(Px1,Tx2)
+in-city-changed(Lx1,Cx2)
