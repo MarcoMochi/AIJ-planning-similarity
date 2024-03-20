@@ -1,0 +1,54 @@
+% Name-1
+pfile0
+% Edges-1
+0;3;Vx1=Vy1;pre;at_start
+0;4;Vx1=Vy1;add;at_start
+0;3;Vx1=Vy1;del;at_start
+0;4;Vx1=Vy1;del;at_end
+0;7;Vx1=Vy1;add;at_end
+0;8;Vx1=Vy1;del;at_end
+1;4;Vx1=Vy1;pre;at_start
+1;5;Vx1=Vy1;add;at_start
+1;5;Vx1=Vy1;del;at_end
+1;8;Vx1=Vy1;add;at_end
+2;5;Vx1=Vy1;pre;at_start
+2;7;Vx1=Vy1;del;at_end
+2;9;Vx1=Vy1;add;at_end
+% Nodes-1
+action_type1(Vy1;dur=n5.0)
+action_type2(Vy1;dur=n4.0)
+action_type3(Vy1;dur=n1.0)
+norepeat(Vx1)
+condition1(Vx1)
+condition2(Vx1)
+condition3(Vx1)
+target1(Vx1)
+target2(Vx1)
+target3(Vx1)
+% Name-2
+pfile0
+% Edges-2
+0;3;Vx1=Vy1;pre;at_start
+0;4;Vx1=Vy1;add;at_start
+0;3;Vx1=Vy1;del;at_start
+0;4;Vx1=Vy1;del;at_end
+0;7;Vx1=Vy1;add;at_end
+0;8;Vx1=Vy1;del;at_end
+1;4;Vx1=Vy1;pre;at_start
+1;5;Vx1=Vy1;add;at_start
+1;5;Vx1=Vy1;del;at_end
+1;8;Vx1=Vy1;add;at_end
+2;5;Vx1=Vy1;pre;at_start
+2;7;Vx1=Vy1;del;at_end
+2;9;Vx1=Vy1;add;at_end
+% Nodes-2
+action_type1(Vy1;dur=n5.0)
+action_type2(Vy1;dur=n4.0)
+action_type3(Vy1;dur=n1.0)
+norepeat(Vx1)
+condition1(Vx1)
+condition2(Vx1)
+condition3(Vx1)
+target1(Vx1)
+target2(Vx1)
+target3(Vx1)

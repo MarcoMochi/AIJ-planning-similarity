@@ -1,0 +1,32 @@
+Map node "move" of type "type(Operator,Durative)" with elements "D1,F1,P1,T1" of "p008-hexoban-temporal" to node "move" of type "type(Operator,Durative)" with elements "D1,F1,P1,T1" of "p017-hexoban-temporal" 
+Map node "push-to-nongoal" of type "type(Operator,Durative)" with elements "D1,F1,P1,P2,S1,T1" of "p008-hexoban-temporal" to node "push-to-nongoal" of type "type(Operator,Durative)" with elements "D1,F1,P1,P2,S1,T1" of "p017-hexoban-temporal" 
+Map node "push-to-goal" of type "type(Operator,Durative)" with elements "D1,F1,P1,P2,S1,T1" of "p008-hexoban-temporal" to node "push-to-goal" of type "type(Operator,Durative)" with elements "D1,F1,P1,P2,S1,T1" of "p017-hexoban-temporal" 
+Map node "clear-at" of type "type(Predicate,std)" with elements "L1,L2,T1" of "p008-hexoban-temporal" to node "at" of type "type(Predicate,std)" with elements "L1,T1" of "p017-hexoban-temporal" 
+	Remapping variables L1,T1 --> L1,L2,T1 
+Map node "at-goal" of type "type(Predicate,std)" with elements "S1" of "p008-hexoban-temporal" to node "at-goal" of type "type(Predicate,std)" with elements "L1,S1" of "p017-hexoban-temporal" 
+	Remapping variables L1,S1 --> S1 
+Map node "is-goal" of type "type(Predicate,std)" with elements "L1" of "p008-hexoban-temporal" to node "clear" of type "type(Predicate,std)" with elements "L1" of "p017-hexoban-temporal" 
+Map node "is-nongoal" of type "type(Predicate,std)" with elements "L1" of "p008-hexoban-temporal" to node "is-nongoal" of type "type(Predicate,std)" with elements "L1" of "p017-hexoban-temporal" 
+Map node "move-dir" of type "type(Predicate,std)" with elements "D1,F1,T1" of "p008-hexoban-temporal" to node "move-dir" of type "type(Predicate,std)" with elements "D1,F1,T1" of "p017-hexoban-temporal" 
+Add node "push-to-goal" of type "type(Operator,Durative)" with elements "D1,F1,P1,P2,S1,T1" in "p017-hexoban-temporal" 
+Delete edge of type "type(add,at_end)" in p017-hexoban-temporal from "move" to "push-to-goal" with the relations Pa1=Pb3 
+Delete edge of type "type(add,at_end)" in p017-hexoban-temporal from "push-to-nongoal" to "push-to-goal" with the relations Pa1=Pb3 
+Add edge of type "type(pre,at_start)" in "p017-hexoban-temporal" from "move" to "at" with the relations Ta1=Tb3 
+Add edge of type "type(del,at_start)" in "p017-hexoban-temporal" from "move" to "at" with the relations Ta1=Tb3 
+Add edge of type "type(add,at_end)" in "p017-hexoban-temporal" from "move" to "at" with the relations Fa1=Fb2 
+Add edge of type "type(pre,at_start)" in "p017-hexoban-temporal" from "push-to-goal" to "at" with the relations Pa1=Pb1,Pa2=Pb3 
+Add edge of type "type(pre,at_start)" in "p017-hexoban-temporal" from "push-to-goal" to "at" with the relations Sa1=Sb2,Fa2=Fb4 
+Add edge of type "type(pre,at_start)" in "p017-hexoban-temporal" from "push-to-nongoal" to "at" with the relations Ta1=Tb5 
+Add edge of type "type(pre,at_start)" in "p017-hexoban-temporal" from "push-to-goal" to "at" with the relations Ta1=Tb5 
+Add edge of type "type(pre,over_all)" in "p017-hexoban-temporal" from "push-to-goal" to "move-dir" with the relations Pa1=Pb3,Fa2=Fb4,Da3=Db6 
+Add edge of type "type(pre,over_all)" in "p017-hexoban-temporal" from "push-to-goal" to "move-dir" with the relations Fa1=Fb4,Ta2=Tb5,Da3=Db6 
+Add edge of type "type(pre,over_all)" in "p017-hexoban-temporal" from "push-to-goal" to "clear" with the relations Ta1=Tb5 
+Add edge of type "type(del,at_start)" in "p017-hexoban-temporal" from "push-to-goal" to "at" with the relations Pa1=Pb1,Pa2=Pb3 
+Add edge of type "type(del,at_start)" in "p017-hexoban-temporal" from "push-to-goal" to "at" with the relations Sa1=Sb2,Fa2=Fb4 
+Add edge of type "type(del,at_start)" in "p017-hexoban-temporal" from "push-to-nongoal" to "at" with the relations Ta1=Tb5 
+Add edge of type "type(del,at_start)" in "p017-hexoban-temporal" from "push-to-goal" to "at" with the relations Ta1=Tb5 
+Add edge of type "type(add,at_end)" in "p017-hexoban-temporal" from "push-to-goal" to "at" with the relations Pa1=Pb1,Fa2=Fb4 
+Add edge of type "type(add,at_end)" in "p017-hexoban-temporal" from "push-to-goal" to "at" with the relations Sa1=Sb2,Ta2=Tb5 
+Add edge of type "type(add,at_end)" in "p017-hexoban-temporal" from "push-to-nongoal" to "at" with the relations Pa1=Pb3 
+Add edge of type "type(add,at_end)" in "p017-hexoban-temporal" from "push-to-goal" to "at" with the relations Pa1=Pb3 
+Add edge of type "type(add,at_end)" in "p017-hexoban-temporal" from "push-to-goal" to "at-goal" with the relations Sa1=Sb2 
