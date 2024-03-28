@@ -1,0 +1,148 @@
+Map node "drive" of type "type(Operator,std)" with elements "X1,Y1,Z1" of "depotprob1818" to node "drive" of type "type(Operator,std)" with elements "X1,Y1,Z1" of "dlog-2-2-2" 
+Map node "lift" of type "type(Operator,std)" with elements "P1,X1,Y1,Z1" of "depotprob1818" to node "unload" of type "type(Operator,std)" with elements "P1,X1,Y1,Z1" of "dlog-2-2-2" 
+Map node "drop" of type "type(Operator,std)" with elements "P1,X1,Y1,Z1" of "depotprob1818" to node "walk" of type "type(Operator,std)" with elements "D1,L1,L2" of "dlog-2-2-2" 
+	Remapping variables D1,L1,L2 --> P1,X1,Y1,Z1 
+Map node "load" of type "type(Operator,std)" with elements "P1,X1,Y1,Z1" of "depotprob1818" to node "unload-truck" of type "type(Operator,std)" with elements "L1,O1,T1" of "dlog-2-2-2" 
+	Remapping variables L1,O1,T1 --> P1,X1,Y1,Z1 
+Map node "unload" of type "type(Operator,std)" with elements "P1,X1,Y1,Z1" of "depotprob1818" to node "load-truck" of type "type(Operator,std)" with elements "L1,O1,T1" of "dlog-2-2-2" 
+	Remapping variables L1,O1,T1 --> P1,X1,Y1,Z1 
+Map node "at" of type "type(Predicate,std)" with elements "X1,Y1" of "depotprob1818" to node "link" of type "type(Predicate,std)" with elements "X1,Y1" of "dlog-2-2-2" 
+Map node "on" of type "type(Predicate,std)" with elements "X1,Y1" of "depotprob1818" to node "empty" of type "type(Predicate,std)" with elements "V1" of "dlog-2-2-2" 
+	Remapping variables V1 --> X1,Y1 
+Map node "in" of type "type(Predicate,std)" with elements "X1,Y1" of "depotprob1818" to node "obj" of type "type(Predicate,std)" with elements "O1" of "dlog-2-2-2" 
+	Remapping variables O1 --> X1,Y1 
+Map node "lifting" of type "type(Predicate,std)" with elements "X1,Y1" of "depotprob1818" to node "path" of type "type(Predicate,std)" with elements "X1,Y1" of "dlog-2-2-2" 
+Map node "available" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "pallet" of type "type(Predicate,std)" with elements "X1" of "dlog-2-2-2" 
+Map node "clear" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "driving" of type "type(Predicate,std)" with elements "D1,V1" of "dlog-2-2-2" 
+	Remapping variables D1,V1 --> X1 
+Map node "place" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "place" of type "type(Predicate,std)" with elements "X1" of "dlog-2-2-2" 
+Map node "locatable" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "truck" of type "type(Predicate,std)" with elements "T1" of "dlog-2-2-2" 
+	Remapping variables T1 --> X1 
+Map node "depot" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "at" of type "type(Predicate,std)" with elements "L1,O1" of "dlog-2-2-2" 
+	Remapping variables L1,O1 --> X1 
+Map node "distributor" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "location" of type "type(Predicate,std)" with elements "L1" of "dlog-2-2-2" 
+	Remapping variables L1 --> X1 
+Map node "truck" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "in" of type "type(Predicate,std)" with elements "X1,Y1" of "dlog-2-2-2" 
+	Remapping variables X1,Y1 --> X1 
+Map node "hoist" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "crate" of type "type(Predicate,std)" with elements "X1" of "dlog-2-2-2" 
+Map node "surface" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "in" of type "type(Predicate,std)" with elements "O1,O2" of "dlog-2-2-2" 
+	Remapping variables O1,O2 --> X1 
+Map node "pallet" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "driver" of type "type(Predicate,std)" with elements "D1" of "dlog-2-2-2" 
+	Remapping variables D1 --> X1 
+Map node "crate" of type "type(Predicate,std)" with elements "X1" of "depotprob1818" to node "clear" of type "type(Predicate,std)" with elements "X1" of "dlog-2-2-2" 
+Map node "board-truck" of type "type(Operator,std)" with elements "D1,L1,T1" of "depotprob1818" to node "disembark-truck" of type "type(Operator,std)" with elements "D1,L1,T1" of "dlog-2-2-2" 
+Map node "disembark-truck" of type "type(Operator,std)" with elements "D1,L1,T1" of "depotprob1818" to node "board-truck" of type "type(Operator,std)" with elements "D1,L1,T1" of "dlog-2-2-2" 
+Map node "drive-truck" of type "type(Operator,std)" with elements "D1,L1,L2,T1" of "depotprob1818" to node "drive-truck" of type "type(Operator,std)" with elements "D1,L1,L2,T1" of "dlog-2-2-2" 
+Add node "drive" of type "type(Operator,std)" with elements "X1,Y1,Z1" in "dlog-2-2-2" 
+Add node "unload" of type "type(Operator,std)" with elements "P1,X1,Y1,Z1" in "dlog-2-2-2" 
+Add node "in" of type "type(Predicate,std)" with elements "X1,Y1" in "dlog-2-2-2" 
+Add node "clear" of type "type(Predicate,std)" with elements "X1" in "dlog-2-2-2" 
+Add node "place" of type "type(Predicate,std)" with elements "X1" in "dlog-2-2-2" 
+Add node "pallet" of type "type(Predicate,std)" with elements "X1" in "dlog-2-2-2" 
+Add node "crate" of type "type(Predicate,std)" with elements "X1" in "dlog-2-2-2" 
+Add node "board-truck" of type "type(Operator,std)" with elements "D1,L1,T1" in "depotprob1818" 
+Add node "disembark-truck" of type "type(Operator,std)" with elements "D1,L1,T1" in "depotprob1818" 
+Add node "drive-truck" of type "type(Operator,std)" with elements "D1,L1,L2,T1" in "depotprob1818" 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "disembark-truck" to "truck" with the relations Oa1=Ob1 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "drive-truck" to "truck" with the relations Oa1=Ob1 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "disembark-truck" to "driving" with the relations Ta1=Tb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "drive-truck" to "driving" with the relations Ta1=Tb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "board-truck" to "path" with the relations La1=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "disembark-truck" to "path" with the relations La1=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "drive-truck" to "path" with the relations La1=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "disembark-truck" to "link" with the relations Ta1=Tb2,La2=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "drive-truck" to "link" with the relations Ta1=Tb2,La2=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "drive-truck" to "link" with the relations Oa1=Ob1,La2=Lb3 
+Delete edge of type "type(del,std)" in dlog-2-2-2 from "drive-truck" to "link" with the relations Oa1=Ob1,La2=Lb3 
+Delete edge of type "type(add,std)" in dlog-2-2-2 from "drive-truck" to "lift" with the relations Oa1=Ob1,Ta2=Tb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "disembark-truck" to "lift" with the relations Oa1=Ob1,Ta2=Tb2 
+Delete edge of type "type(del,std)" in dlog-2-2-2 from "disembark-truck" to "lift" with the relations Oa1=Ob1,Ta2=Tb2 
+Delete edge of type "type(add,std)" in dlog-2-2-2 from "disembark-truck" to "link" with the relations Oa1=Ob1,La2=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "board-truck" to "drop" with the relations Da1=Db1 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "on" to "drop" with the relations Da1=Db1 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "in" to "drop" with the relations Da1=Db1 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "in" to "obj" with the relations Ta1=Tb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "on" to "driving" with the relations Ta1=Tb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "in" to "driving" with the relations Ta1=Tb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "on" to "path" with the relations La1=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "in" to "path" with the relations La1=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "on" to "link" with the relations Ta1=Tb2,La2=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "in" to "link" with the relations Ta1=Tb2,La2=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "in" to "link" with the relations Da1=Db1,La2=Lb3 
+Delete edge of type "type(del,std)" in dlog-2-2-2 from "in" to "link" with the relations Da1=Db1,La2=Lb3 
+Delete edge of type "type(add,std)" in dlog-2-2-2 from "in" to "at" with the relations Da1=Db1,Ta2=Tb2 
+Delete edge of type "type(del,std)" in dlog-2-2-2 from "in" to "obj" with the relations Ta1=Tb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "on" to "at" with the relations Da1=Db1,Ta2=Tb2 
+Delete edge of type "type(del,std)" in dlog-2-2-2 from "on" to "at" with the relations Da1=Db1,Ta2=Tb2 
+Delete edge of type "type(add,std)" in dlog-2-2-2 from "board-truck" to "link" with the relations Da1=Db1,La2=Lb3 
+Delete edge of type "type(add,std)" in dlog-2-2-2 from "on" to "link" with the relations Da1=Db1,La2=Lb3 
+Delete edge of type "type(add,std)" in dlog-2-2-2 from "on" to "obj" with the relations Ta1=Tb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "lifting" to "driving" with the relations Ta1=Tb1 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "board-truck" to "path" with the relations La1=Lb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "lifting" to "path" with the relations La1=Lb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "lifting" to "path" with the relations La1=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "lifting" to "drop" with the relations Da1=Db4 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "lifting" to "link" with the relations Ta1=Tb1,La2=Lb2 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "lifting" to "at" with the relations Da1=Db4,Ta2=Tb1 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "lifting" to "walk" with the relations La1=Lb2,La2=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "board-truck" to "location" with the relations La1=Lb2,La2=Lb3 
+Delete edge of type "type(del,std)" in dlog-2-2-2 from "lifting" to "link" with the relations Ta1=Tb1,La2=Lb2 
+Delete edge of type "type(add,std)" in dlog-2-2-2 from "lifting" to "link" with the relations Ta1=Tb1,La2=Lb3 
+Delete edge of type "type(pre,)" in dlog-2-2-2 from "board-truck" to "link" with the relations Da1=Db1,La2=Lb2 
+Delete edge of type "type(del,std)" in dlog-2-2-2 from "board-truck" to "link" with the relations Da1=Db1,La2=Lb2 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "load-truck" to "pallet" with the relations Xa1=Xb1 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload" to "pallet" with the relations Xa1=Xb1 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "load-truck" to "crate" with the relations Xa1=Xb1 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload-truck" to "crate" with the relations Xa1=Xb1 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "walk" to "crate" with the relations Xa1=Xb1 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload" to "crate" with the relations Xa1=Xb1 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "drive" to "in" with the relations Xa1=Xb1 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "load-truck" to "clear" with the relations Ya1=Yb2 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload-truck" to "clear" with the relations Ya1=Yb2 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "walk" to "clear" with the relations Ya1=Yb2 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload" to "clear" with the relations Ya1=Yb2 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "drive" to "place" with the relations Ya1=Yb2 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload" to "driving" with the relations Ya1=Yb2 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "drive" to "place" with the relations Za1=Zb3 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "walk" to "in" with the relations Za1=Zb3 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload" to "in" with the relations Za1=Zb3 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "walk" to "driving" with the relations Za1=Zb3 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "load-truck" to "in" with the relations Za1=Zb3 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload-truck" to "in" with the relations Za1=Zb3 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "drive" to "link" with the relations Xa1=Xb1,Ya2=Yb2 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload-truck" to "path" with the relations Xa1=Xb1,Ya2=Yb2 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "walk" to "path" with the relations Xa1=Xb1,Ya2=Yb2 
+Add edge of type "type(add,std)" in "dlog-2-2-2" from "drive" to "link" with the relations Xa1=Xb1,Za2=Zb3 
+Add edge of type "type(del,std)" in "dlog-2-2-2" from "drive" to "link" with the relations Xa1=Xb1,Ya2=Yb2 
+Add edge of type "type(del,std)" in "dlog-2-2-2" from "unload-truck" to "path" with the relations Xa1=Xb1,Ya2=Yb2 
+Add edge of type "type(del,std)" in "dlog-2-2-2" from "walk" to "path" with the relations Xa1=Xb1,Ya2=Yb2 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload" to "place" with the relations Pa1=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "load-truck" to "place" with the relations Pa1=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload-truck" to "place" with the relations Pa1=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "walk" to "place" with the relations Pa1=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload" to "link" with the relations Xa1=Xb1,Pa2=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "load-truck" to "link" with the relations Xa1=Xb1,Pa2=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload-truck" to "link" with the relations Xa1=Xb1,Pa2=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "walk" to "link" with the relations Xa1=Xb1,Pa2=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload" to "link" with the relations Ya1=Yb2,Pa2=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "load-truck" to "obj" with the relations Ya1=Yb2,Za2=Zb3 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload" to "empty" with the relations Ya1=Yb2,Za2=Zb3 
+Add edge of type "type(add,std)" in "dlog-2-2-2" from "unload" to "path" with the relations Xa1=Xb1,Ya2=Yb2 
+Add edge of type "type(add,std)" in "dlog-2-2-2" from "load-truck" to "path" with the relations Xa1=Xb1,Ya2=Yb2 
+Add edge of type "type(add,std)" in "dlog-2-2-2" from "unload" to "driving" with the relations Za1=Zb3 
+Add edge of type "type(del,std)" in "dlog-2-2-2" from "unload" to "link" with the relations Ya1=Yb2,Pa2=Pb4 
+Add edge of type "type(del,std)" in "dlog-2-2-2" from "unload" to "driving" with the relations Ya1=Yb2 
+Add edge of type "type(del,std)" in "dlog-2-2-2" from "unload" to "pallet" with the relations Xa1=Xb1 
+Add edge of type "type(del,std)" in "dlog-2-2-2" from "load-truck" to "pallet" with the relations Xa1=Xb1 
+Add edge of type "type(del,std)" in "dlog-2-2-2" from "load-truck" to "obj" with the relations Ya1=Yb2,Za2=Zb3 
+Add edge of type "type(del,std)" in "dlog-2-2-2" from "unload" to "empty" with the relations Ya1=Yb2,Za2=Zb3 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "load-truck" to "link" with the relations Za1=Zb3,Pa2=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "unload-truck" to "link" with the relations Za1=Zb3,Pa2=Pb4 
+Add edge of type "type(pre,)" in "dlog-2-2-2" from "walk" to "link" with the relations Za1=Zb3,Pa2=Pb4 
+Add edge of type "type(add,std)" in "dlog-2-2-2" from "unload-truck" to "pallet" with the relations Xa1=Xb1 
+Add edge of type "type(add,std)" in "dlog-2-2-2" from "walk" to "pallet" with the relations Xa1=Xb1 
+Add edge of type "type(add,std)" in "dlog-2-2-2" from "walk" to "link" with the relations Ya1=Yb2,Pa2=Pb4 
+Add edge of type "type(add,std)" in "dlog-2-2-2" from "walk" to "driving" with the relations Ya1=Yb2 
+Add edge of type "type(add,std)" in "dlog-2-2-2" from "unload-truck" to "obj" with the relations Ya1=Yb2,Za2=Zb3 
+Add edge of type "type(add,std)" in "dlog-2-2-2" from "walk" to "empty" with the relations Ya1=Yb2,Za2=Zb3 
+Add edge of type "type(del,std)" in "dlog-2-2-2" from "walk" to "driving" with the relations Za1=Zb3 

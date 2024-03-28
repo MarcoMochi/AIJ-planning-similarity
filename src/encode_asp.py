@@ -346,10 +346,22 @@ def add_nodes(nodes_graph_i, nodes_graph_j, duration_graph_i, duration_graph_j, 
                     break
             if not found:
                 if preprocessing:
-                    nodes_graph_i.append(Node(identifier=len(nodes_graph_i), original=0, graph=node2.graph.value,
+                    temp_id = len(nodes_graph_i)
+                    nodes_graph_i.append(Node(identifier=temp_id, original=0, graph=node2.graph.value,
                                               elements=node1.elements.value, name=node1.name,
                                               type_node=node1.type_node.value,
                                               notes="('empty'; 'empty')"))
+                    for duration in duration_graph_j:
+                        if duration.identifier.value == node1.identifier.value:
+                            if duration.type.value == "Natural":
+                                duration_graph_i.append(Duration(identifier=temp_id, original=0, graph=node2.graph.value,
+                                                                 type="Natural", value=duration.value.value, notes="('empty'; 'empty')"))
+                            else:
+                                for temp_node in [funct for funct in nodes_graph_i if "Function" in funct.type_node.value]:
+                                    duration_graph_i.append(
+                                        Duration(identifier=temp_id, original=0, graph=node2.graph.value,
+                                                 type="Function", value=temp_node.identifier.value,
+                                                 notes="('empty'; 'empty')"))
                 else:
                     nodes_graph_i.append(Node(identifier=len(nodes_graph_i), original=0, graph=node2.graph.value,
                                               elements=node1.elements.value, name=node1.name,
@@ -597,6 +609,7 @@ def translate_no_pre():
               relation=var("relation")) as e:
         p += Assert(None).when(e).otherwise(1, 3, e.identifier, e.graph, e.node1, e.node2, e.label, e.relation)
 
+
     with Node(identifier=var("id2"), graph=g2, original=var("original2"), elements=var("elements1"), name=var("name1"),
               type_node=var("type"), notes=var("notes1")) as n1:
         with Node(identifier=var("id1"), graph=g1, original=hide(), elements=n1.elements, name=hide(),
@@ -640,6 +653,7 @@ def translate_no_pre():
             Edge(identifier=hide(), original=1, graph=g1, node1=m1.from_, node2=m2.from_, label=e1.label,
                  relation=e1.relation) as e2:
         p += Define(e_new).when(m1, m2, e1, ~e2)
+
     return p
 
 
@@ -651,7 +665,7 @@ def write_encoding(path, p):
 def run_process(p, path):
     print("Starting search")
     solver = SolverWrapper(solver_path="/opt/homebrew/bin/clingo")
-    res = solver.solve(problem=p, options=["-t 4"], timeout=30)
+    res = solver.solve(problem=p, options=["-t 8"], timeout=120)
     solution = ""
 
     if solver.killed:

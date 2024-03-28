@@ -325,16 +325,19 @@ edge(45, 1, "dlog-2-2-2", 5, 10, "type(del,std)", "Da1=Db1,La2=Lb2").
 edge(46, 1, "dlog-2-2-2", 5, 10, "type(add,std)", "Da1=Db1,La2=Lb3").
  :~ node(VAR_id, 1, VAR_graph, _, _, _, VAR_notes1); node(VAR_id, 1, VAR_graph, _, _, _, VAR_notes2); VAR_notes1 != VAR_notes2. [1@3, VAR_id]
  :~ node(VAR_id, 0, VAR_graph, VAR_name, VAR_type, VAR_elements, _). [1@4, VAR_id,VAR_graph]
- :~ duration(VAR_id, 0, "depotprob1818", _, VAR_id, _). [1@2, VAR_id]
+ :~ duration(VAR_id, 0, _, _, VAR_id, _). [1@2, VAR_id]
  :~ duration(VAR_id, _, "depotprob1818", VAR_t1, _, _); duration(VAR_id, _, "depotprob1818", VAR_t2, _, _); VAR_t1 > VAR_t2. [1@2, VAR_id]
- :~ duration(VAR_id, _, "depotprob1818", VAR_t, VAR_v1, _); duration(VAR_id, _, "depotprob1818", VAR_t, VAR_v2, _); VAR_v1 > VAR_v2. [1@1, VAR_id]
+ :~ duration(VAR_id, _, "depotprob1818", VAR_t, VAR_v1, _); duration(VAR_id, _, "depotprob1818", VAR_t, VAR_v2, _); VAR_v1 > VAR_v2. [1@1, VAR_id,VAR_v1]
  :~ edge(VAR_id, 0, VAR_graph, VAR_n1, VAR_n2, VAR_label, VAR_relation). [1@4, VAR_id,VAR_graph,VAR_n1,VAR_n2,VAR_label,VAR_relation]
+ :~ map(VAR_1, VAR_2, X3b2d600eb2f64475af724cf6ed344514, X101e00a78401436e9e7d1df87dad579d); node(VAR_1, _, _, VAR_N1, _, _, _); node(VAR_2, _, _, VAR_N2, _, _, _); VAR_N1 != VAR_N2. [1@1, VAR_1]
 {map(VAR_id1, VAR_id2, VAR_notes1, VAR_notes2) : node(VAR_id2, VAR_original2, "dlog-2-2-2", VAR_name1, VAR_type, VAR_elements1, VAR_notes1), node(VAR_id1, _, "depotprob1818", _, VAR_type, VAR_elements1, VAR_notes2)} = 1 :- node(VAR_id1, _, "depotprob1818", _, VAR_type, _, _).
-toMap(VAR_N1, VAR_N2) :- map(VAR_N1, VAR_N2, Xec4e7513b4d8491e923c2bc69434dd24, X2cc02f117e7241f0b1b966b2d82897b8); node(VAR_N1, _, "depotprob1818", _, "type(Operator,Durative)", _, _).
- :- toMap(VAR_N1, VAR_N2); not duration(VAR_N1, _, "depotprob1818", VAR_T1, _, _); duration(VAR_N2, _, "dlog-2-2-2", VAR_T1, _, _).
-duration(VAR_N1, 1, "depotprob1818", "Natural", VAR_Value, "('empty'; 'empty')") :- toMap(VAR_N1, VAR_N2); duration(VAR_N2, _, "dlog-2-2-2", "Natural", VAR_Value, _).
- :- toMap(VAR_V1, VAR_V2); duration(VAR_V2, _, "dlog-2-2-2", "Function", VAR_N2, _); map(VAR_N1, VAR_N2, _, _); #count{VAR_V1 : duration(VAR_V1, _, "depotprob1818", "Function", VAR_N1, _)} != 1.
- :- node(VAR_id, _, "dlog-2-2-2", _, _, _, _); #count{VAR_v : map(VAR_v, VAR_id, Xda56e3e4bd8e465cb7069e1c1f931e82, X1c8a38e6dade40f1b719a9290d17abc1)} != 1.
+toMap(VAR_N1, VAR_N2) :- map(VAR_N1, VAR_N2, Xbd63fc226b5b451dbbfbce1f5d0c9882, Xc7cc70b8c9c74862b0241c572ba2e089); node(VAR_N1, _, "depotprob1818", _, "type(Operator,Durative)", _, _).
+{mapDuration(VAR_N1, VAR_N2, VAR_Notes1, VAR_Notes2) : duration(VAR_N2, _, "dlog-2-2-2", VAR_T, _, VAR_Notes1), duration(VAR_N1, _, "depotprob1818", VAR_T, _, VAR_Notes2)} = 1 :- toMap(VAR_N1, VAR_N2); duration(VAR_N1, _, "depotprob1818", _, _, _).
+duration(VAR_N1, 1, "depotprob1818", "Natural", VAR_V1, "('Function';'Natural')") :- toMap(VAR_N1, VAR_N2); duration(VAR_N2, _, "dlog-2-2-2", "Natural", VAR_V1, _); duration(VAR_N1, _, "depotprob1818", "Function", _, _).
+ :- mapDuration(VAR_N1, VAR_N2, _, VAR_Notes); duration(VAR_N2, _, "dlog-2-2-2", "Natural", VAR_Value, _); not duration(VAR_N1, _, "depotprob1818", "Natural", VAR_Value, VAR_Notes).
+ :- mapDuration(VAR_N1, VAR_N2, VAR_Notes, _); duration(VAR_N2, _, "dlog-2-2-2", "Function", VAR_Value2, VAR_Notes); duration(VAR_N1, _, "depotprob1818", VAR_Value1, VAR_Value2, _); not map(VAR_Value2, VAR_Value2, _, _).
+ :- duration(VAR_Id, _, "dlog-2-2-2", _, _, _); #count{VAR_V : mapDuration(VAR_V, VAR_Id, X572c016a6ec245ffb3cff83e05e08674, X2c3da055ea714e0fb89cace3b1562d4a)} != 1.
+ :- node(VAR_id, _, "dlog-2-2-2", _, _, _, _); #count{VAR_v : map(VAR_v, VAR_id, Xe5c9d04c833c4bbb959b551fadbd453f, X43d7ca76e5534a4ea7f7bf062978d837)} != 1.
  :- #sum{1,VAR_id : node(VAR_id, _, "depotprob1818", _, _, _, _); -1,VAR_id : node(VAR_id, _, "dlog-2-2-2", _, _, _, _)} != 0.
-edge(500, 0, "dlog-2-2-2", VAR_2, VAR_4, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, Xbccea9eac60344cf880d2b9454aa6ea5, Xd0e1da14b7d840bda67d94a3a0c43244); map(VAR_3, VAR_4, X34eda6be809745b09b8d359aa5916578, X94f2ccc709524060910bc7180d25a371); edge(_, 1, "depotprob1818", VAR_1, VAR_3, VAR_label, VAR_relation); not edge(_, 1, "dlog-2-2-2", VAR_2, VAR_4, VAR_label, VAR_relation).
-edge(500, 0, "depotprob1818", VAR_1, VAR_3, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, X7b9d26644fa844c7932d7a9ef984524b, X4bf287ff97004555afb72a2f879b52e4); map(VAR_3, VAR_4, Xe20734cbb33340df98ac138acb44eaed, X396f3a9b841c4d9baecb85ee8b753ad4); edge(_, 1, "dlog-2-2-2", VAR_2, VAR_4, VAR_label, VAR_relation); not edge(_, 1, "depotprob1818", VAR_1, VAR_3, VAR_label, VAR_relation).
+edge(500, 0, "dlog-2-2-2", VAR_2, VAR_4, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, Xf3992fc48be9466dbb541f59ac586806, Xd40cd66f581e4289af4940768b8add47); map(VAR_3, VAR_4, X4c05ff66a8ea496fa1c7f67c67f03064, X47da09dc370f48b6ab871d8811e62680); edge(_, 1, "depotprob1818", VAR_1, VAR_3, VAR_label, VAR_relation); not edge(_, 1, "dlog-2-2-2", VAR_2, VAR_4, VAR_label, VAR_relation).
+edge(500, 0, "depotprob1818", VAR_1, VAR_3, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, X4a7ce866b49f4ac3bf2c745099c9012c, X0500ede8b25e41418093ed2b0ee2c4b3); map(VAR_3, VAR_4, X77fd06faff4748429bdd8cf75486de04, Xb3210f2d1541474d9a1577469292c11a); edge(_, 1, "dlog-2-2-2", VAR_2, VAR_4, VAR_label, VAR_relation); not edge(_, 1, "depotprob1818", VAR_1, VAR_3, VAR_label, VAR_relation).
