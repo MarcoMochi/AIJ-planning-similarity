@@ -32,9 +32,27 @@ class Node:
     elements: str
     notes: tuple
 
+@atom
+class Val:
+    costDuration: str
+    identifier: int
+    original: int
+    graph: str
+    type: str
+    value: int
+    notes: str
 
 @atom
 class Duration:
+    identifier: int
+    original: int
+    graph: str
+    type: str
+    value: int
+    notes: str
+
+@atom
+class Cost:
     identifier: int
     original: int
     graph: str
@@ -58,7 +76,7 @@ class ToMap:
 
 
 @atom
-class MapDuration:
+class MapValues:
     from_: int
     to_: int
     notes1: str
@@ -89,6 +107,11 @@ def redefine_class():
 immutable = ""
 operator = "Operator"
 predicate = "Predicate"
+operator_el = "Operator,Durative"
+predicate_el_1 = "Predicate"
+predicate_el_2 = "Predicate,Function"
+
+
 func = "Function"
 g1 = None
 g2 = None
@@ -103,6 +126,7 @@ graph2 = []
 elements = []
 type_g1 = {}
 type_g2 = {}
+count_lines = 0
 empty = False
 
 
@@ -126,6 +150,7 @@ def read_graphs(path, preprocessing):
         lines = f.readlines()
         assert len(lines) > 0, "Input file is empty"
         mode = 0
+        count_lines = 0
         for line in lines:
             line = line.strip()
             if line == "% Name-1":
@@ -137,10 +162,14 @@ def read_graphs(path, preprocessing):
             elif line == "% Edges-1":
                 mode = 2
             elif line == "% Nodes-2":
+                count_lines = 0
                 mode = 3
             elif line == "% Edges-2":
                 mode = 4
             elif mode == 1 or mode == 3:
+                if line.startswith("duration_"):
+                    count_lines += 0
+                    continue
                 line_ = line.replace(")", "")
                 params = line_.split("(")
                 value = "-"
@@ -153,20 +182,6 @@ def read_graphs(path, preprocessing):
                     durative_type = None
                     if ";" in params[1]:
                         params[1], label_node = params[1].split(";")
-                        if "func" in label_node:
-                            type_node = func
-                        elif "dur" in label_node:
-                            type_node = "Durative"
-                            durative = True
-                            if "n" in label_node:
-                                duration = int(extract_numbers(label_node))
-                                durative_type = "Natural"
-                            else:
-                                durative_type = "Function"
-                                if mode == 1:
-                                    duration = int(nodes_graph_1[int(extract_numbers(label_node))].identifier.value)
-                                else:
-                                    duration = int(nodes_graph_2[int(extract_numbers(label_node))].identifier.value)
 
                     v = params[1].split(",")
                     v2 = []
@@ -181,79 +196,55 @@ def read_graphs(path, preprocessing):
                     value = ",".join(v2)
 
                 if mode == 1:
+                    type_node = type_g1[str(len(nodes_graph_1))]
                     if len(value) >= 0:
                         try:
                             elements.append([value, type_g1[str(len(nodes_graph_1))]])
                             if preprocessing:
                                 nodes_graph_1.append(
                                     Node(identifier=len(nodes_graph_1), original=1, graph=g1, elements=value,
-                                         type_node=f'type({type_g1[str(len(nodes_graph_1))]},{type_node})',
-                                         name=params[0],
-                                         notes="('empty'; 'empty')"))
-                                if durative:
-                                    duration_graph_1.append(
-                                        Duration(identifier=len(nodes_graph_1) - 1, original=1, graph=g1,
-                                                 type=durative_type, value=duration, notes="('empty'; 'empty')"))
+                                         type_node=f'type({type_node})', name=params[0], notes="('empty'; 'empty')"))
                             else:
                                 nodes_graph_1.append(
                                     Node(identifier=len(nodes_graph_1), original=1, graph=g1, elements=value,
-                                         type_node=f'type({type_g1[str(len(nodes_graph_1))]},{type_node})',
-                                         name=params[0],
-                                         notes=('empty', 'empty')))
-                                if durative:
-                                    duration_graph_1.append(
-                                        Duration(identifier=len(nodes_graph_1) - 1, original=1, graph=g1,
-                                                 type=durative_type, value=duration, notes=('empty', 'empty')))
+                                         type_node=f'type({type_node})', name=params[0], notes=('empty', 'empty')))
                         except:
                             elements.append([value, predicate])
                             if preprocessing:
                                 nodes_graph_1.append(
                                     Node(identifier=len(nodes_graph_1), original=1, graph=g1, elements=value,
-                                         type_node=f'type({predicate},{type_node})', name=params[0],
+                                         type_node=f'type({type_node})', name=params[0],
                                          notes="('empty'; 'empty')"))
-                                if durative:
-                                    duration_graph_1.append(
-                                        Duration(identifier=len(nodes_graph_1) - 1, original=1, graph=g1,
-                                                 type=durative_type, value=duration, notes="('empty'; 'empty')"))
                             else:
                                 nodes_graph_1.append(
                                     Node(identifier=len(nodes_graph_1), original=1, graph=g1, elements=value,
-                                         type_node=f'type({predicate},{type_node})', name=params[0],
+                                         type_node=f'type({type_node})', name=params[0],
                                          notes=('empty', 'empty')))
-
-
                 else:
+                    type_node = type_g2[str(len(nodes_graph_2) + count_lines)]
                     try:
-                        elements.append([value, type_g2[str(len(nodes_graph_2))]])
+                        elements.append([value, type_g2[str(len(nodes_graph_2) + count_lines)]])
                         if preprocessing:
                             nodes_graph_2.append(
-                                Node(identifier=len(nodes_graph_2), original=1, graph=g2, elements=value,
-                                     type_node=f'type({type_g2[str(len(nodes_graph_2))]},{type_node})', name=params[0],
+                                Node(identifier=len(nodes_graph_2) + count_lines, original=1, graph=g2, elements=value,
+                                     type_node=f'type({type_node})', name=params[0],
                                      notes="('empty'; 'empty')"))
-                            if durative:
-                                duration_graph_2.append(
-                                    Duration(identifier=len(nodes_graph_2) - 1, original=1, graph=g2,
-                                             type=durative_type, value=duration, notes="('empty'; 'empty')"))
                         else:
                             nodes_graph_2.append(
-                                Node(identifier=len(nodes_graph_2), original=1, graph=g2, elements=value,
-                                     type_node=f'type({type_g2[str(len(nodes_graph_2))]},{type_node})', name=params[0],
+                                Node(identifier=len(nodes_graph_2) + count_lines, original=1, graph=g2, elements=value,
+                                     type_node=f'type({type_g2[str(len(nodes_graph_2))]})', name=params[0],
                                      notes=('empty', 'empty')))
-                            if durative:
-                                duration_graph_2.append(
-                                    Duration(identifier=len(nodes_graph_2) - 1, original=1, graph=g2,
-                                             type=durative_type, value=duration, notes=('empty', 'empty')))
                     except:
                         elements.append([value, predicate])
                         if preprocessing:
                             nodes_graph_2.append(
-                                Node(identifier=len(nodes_graph_2), original=1, graph=g2, elements=value,
-                                     type_node=f'type({predicate},{type_node})', name=params[0],
+                                Node(identifier=len(nodes_graph_2) + count_lines, original=1, graph=g2, elements=value,
+                                     type_node=f'type({type_node})', name=params[0],
                                      notes="('empty'; 'empty')"))
                         else:
                             nodes_graph_2.append(
-                                Node(identifier=len(nodes_graph_2), original=1, graph=g2, elements=value,
-                                     type_node=f'type({predicate},{type_node})', name=params[0],
+                                Node(identifier=len(nodes_graph_2) + count_lines, original=1, graph=g2, elements=value,
+                                     type_node=f'type({type_node})', name=params[0],
                                      notes=('empty', 'empty')))
 
             elif mode == 2 or mode == 4:
@@ -265,38 +256,73 @@ def read_graphs(path, preprocessing):
                 formatted_rel = []
 
                 type_edge = "std"
-                try:
-                    type_edge = res[4]
-                except:
-                    pass
-                # Get relations in edges
-                # In the left we assume there is the starting node
-                equations = res[2].split(",")
-                if len(equations) != 0:
-                    for single_eq in equations:
-                        splitted_eq = single_eq.split("=")
-                        if len(splitted_eq) == 1:
-                            formatted_rel.append(
-                                re.search("[A-Z]*", splitted_eq[0]).group() + extract_numbers(splitted_eq[0]))
-                        else:
-                            formatted_rel.append(
-                                re.search("[A-Z]*", splitted_eq[0]).group() + "a" + extract_numbers(
-                                    splitted_eq[0]) + "=" \
-                                + re.search("[A-Z]*", splitted_eq[1]).group() + "b" + extract_numbers(splitted_eq[1]))
 
-                relation = tuple(res[2].split(","))
-                if mode == 2:
-                    type_g1[res[0]] = operator
-                    type_g1[res[1]] = predicate
-                    map2relation[f"%s_%s" % (g1, len(graph1))] = relation
-                    graph1.append(Edge(len(graph1), 1, g1, index1, index2, f'type({res[3]},{type_edge})',
-                                       ",".join(formatted_rel)))
+                # Case of durations or cost edges
+                if len(res) == 4:
+                    # Get relations in edges
+                    # In the left we assume there is the starting node
+                    type_node = res[3]
+                    if res[2] == "dur":
+                        if type_node == "Function":
+                            if mode == 2:
+                                type_g1[res[0]] = operator_el
+                                type_g1[res[1]] = predicate_el_2
+                                duration_graph_1.append(
+                                    Duration(identifier=int(res[0]), original=1, graph=g1,
+                                             type=type_node, value=int(res[1]), notes="('empty'; 'empty')"))
+                            else:
+                                type_g2[res[0]] = operator_el
+                                type_g2[res[1]] = predicate_el_2
+
+                                duration_graph_2.append(
+                                    Duration(identifier=int(res[0]), original=1, graph=g2,
+                                             type=type_node, value=int(res[1]), notes="('empty'; 'empty')"))
+                        else:
+                            if mode == 2:
+                                type_g1[res[0]] = operator_el
+                                duration_graph_1.append(
+                                    Duration(identifier=int(res[0]), original=1, graph=g1,
+                                             type=type_node, value=find_number(res[1], mode, lines), notes="('empty'; 'empty')"))
+                            else:
+                                type_g2[res[0]] = operator_el
+                                duration_graph_2.append(
+                                    Duration(identifier=int(res[0]), original=1, graph=g2,
+                                             type=type_node, value=find_number(res[1], mode, lines), notes="('empty'; 'empty')"))
                 else:
-                    type_g2[res[0]] = operator
-                    type_g2[res[1]] = predicate
-                    map2relation["%s_%s" % (g2, len(graph2))] = relation
-                    graph2.append(Edge(len(graph2), 1, g2, index1, index2, f'type({res[3]},{type_edge})',
-                                       ",".join(formatted_rel)))
+                    try:
+                        type_edge = res[4]
+                    except:
+                        pass
+                    # Get relations in edges
+                    # In the left we assume there is the starting node
+                    equations = res[2].split(",")
+                    if len(equations) != 0:
+                        for single_eq in equations:
+                            splitted_eq = single_eq.split("=")
+                            if len(splitted_eq) == 1:
+                                formatted_rel.append(
+                                    re.search("[A-Z]*", splitted_eq[0]).group() + extract_numbers(splitted_eq[0]))
+                            else:
+                                formatted_rel.append(
+                                    re.search("[A-Z]*", splitted_eq[0]).group() + "a" + extract_numbers(
+                                        splitted_eq[0]) + "=" \
+                                    + re.search("[A-Z]*", splitted_eq[1]).group() + "b" + extract_numbers(splitted_eq[1]))
+
+                    relation = tuple(res[2].split(","))
+                    if mode == 2:
+                        if res[0] not in type_g1.keys():
+                            type_g1[res[0]] = operator
+                        type_g1[res[1]] = predicate
+                        map2relation[f"%s_%s" % (g1, len(graph1))] = relation
+                        graph1.append(Edge(len(graph1), 1, g1, index1, index2, f'type({res[3]},{type_edge})',
+                                           ",".join(formatted_rel)))
+                    else:
+                        if res[0] not in type_g2.keys():
+                            type_g2[res[0]] = operator
+                        type_g2[res[1]] = predicate
+                        map2relation["%s_%s" % (g2, len(graph2))] = relation
+                        graph2.append(Edge(len(graph2), 1, g2, index1, index2, f'type({res[3]},{type_edge})',
+                                           ",".join(formatted_rel)))
             elif mode == 5:
                 g1 = line
             elif mode == 6:
@@ -332,9 +358,18 @@ def add_nodes(nodes_graph_i, nodes_graph_j, duration_graph_i, duration_graph_j, 
                 to_add.append(Node(identifier=len(nodes_graph_j) + len(to_add), original=0, graph=graph,
                                    elements=node1.elements.value, name=node1.name, type_node=node1.type_node.value,
                                    notes=('empty', 'empty')))
+                if "Durative" in node1.type_node.value:
+                    for dur in duration_graph_i:
+                        if dur.identifier.value == node1.identifier.value:
+                            if dur.type.value == "Natural":
+                                duration_graph_2.append(
+                                    Duration(identifier=len(nodes_graph_j) + len(to_add) - 1, original=0, graph=graph,
+                                             type=dur.type.value, value=dur.value.value, notes="('empty'; 'empty')"))
+                            else:
+                                durations_to_add.append([len(nodes_graph_j) + len(to_add) - 1, dur.type.value])
     nodes_graph_j.extend(to_add)
 
-    if add_op:
+    if add_op or not preprocessing:
         op_nodes_i = [node for node in nodes_graph_i if "Operator" in node.type_node.value]
         op_nodes_j = [node for node in nodes_graph_j if "Operator" in node.type_node.value]
         for node1 in op_nodes_j:
@@ -506,7 +541,7 @@ def translate_pre():
                           notes=var("Notes1")) as d2, Duration(identifier=d1.identifier, original=hide(), graph=g1,
                                                                type=var("T"), value=hide(),
                                                                notes=var("Notes2")) as d3:
-                with MapDuration(to_=var("N2"), from_=var("N1"), notes1=var("Notes1"), notes2=var("Notes2")) as mapd:
+                with MapValues(to_=var("N2"), from_=var("N1"), notes1=var("Notes1"), notes2=var("Notes2")) as mapd:
                     p += Guess({mapd: (d2, d3)}, exactly=1).when(tmap, d1)
 
     with ToMap(to_=var("N2"), from_=var("N1")) as tmap:
@@ -518,24 +553,24 @@ def translate_pre():
                               notes="('Function';'Natural')") as d3:
                     p += Define(d3).when(tmap, d2, d1)
 
-    with MapDuration(to_=var("N2"), from_=var("N1"), notes1=hide(), notes2=var("Notes")) as mapd:
+    with MapValues(to_=var("N2"), from_=var("N1"), notes1=hide(), notes2=var("Notes")) as mapd:
         with Duration(identifier=tmap.to_, original=hide(), graph=g2, type="Natural",
                       value=var("Value"), notes=hide()) as d1:
             with Duration(identifier=tmap.from_, original=hide(), graph=g1, type=d1.type,
                           value=d1.value, notes=mapd.notes2) as d2:
                 p += Assert(False).when(mapd, d1, ~d2)
 
-    with MapDuration(to_=var("N2"), from_=var("N1"), notes2=hide(), notes1=var("Notes")) as mapd:
+    with MapValues(to_=var("N2"), from_=var("N1"), notes2=hide(), notes1=var("Notes")) as mapd:
         with Duration(identifier=tmap.to_, original=hide(), graph=g2, type="Function",
                       value=var("Value2"), notes=mapd.notes1) as d1:
-            with Duration(identifier=tmap.from_, original=hide(), graph=g1, type=var("Value1"),
-                          value=d1.value, notes=hide()) as d2:
+            with Duration(identifier=tmap.from_, original=hide(), graph=g1, type="Function",
+                          value=var("Value1"), notes=hide()) as d2:
                 with Map(to_=d1.value, from_=d2.value, notes2=hide(), notes1=hide()) as map:
                     p += Assert(False).when(mapd, d1, d2, ~map)
 
     with Duration(identifier=var("Id"), original=hide(), graph=g2, type=hide(),
                   value=hide(), notes=hide()) as d:
-        with MapDuration(to_=d.identifier, from_=var("V")) as mapd:
+        with MapValues(to_=d.identifier, from_=var("V")) as mapd:
             p += Assert(False).when(d, Count({mapd.from_: mapd}) != 1)
 
     # :- node(graph(g2), V2, P), #count {V : map(V, V2)} != 1.
@@ -568,22 +603,42 @@ def translate_pre():
             Edge(identifier=hide(), original=1, graph=g1, node1=m1.from_, node2=m2.from_, label=e1.label,
                  relation=e1.relation) as e2:
         p += Define(e_new).when(m1, m2, e1, ~e2)
+
     return p
+
+
+def find_number(offset, mode, lines):
+    search = False
+    counter = -1
+    for line in lines:
+        if (line == "% Nodes-1\n" or search) and mode == 2:
+            search = True
+            if line.startswith(f"duration_{offset}"):
+                return int(re.search(r"\((\d+[.]?\d+)\)", line).group(1).split(".")[0])
+            else:
+                counter += 1
+        elif (line == "% Nodes-2\n" or search) and mode == 4:
+            search = True
+            if line.startswith(f"duration_{offset}"):
+                return int(re.search(r"\((\d+[.]?\d+)\)", line).group(1).split(".")[0])
+            else:
+                counter += 1
 
 
 def translate_no_pre():
     p = Problem()
-    elements_op = [el[0] for el in elements if el[1] == operator]
-    elements_pr = [el[0] for el in elements if el[1] == predicate]
+    elements_op = [el[0] for el in elements if operator in el[1]]
+    elements_pr = [el[0] for el in elements if predicate in el[1]]
     elements_op = list(set(elements_op))
     for i, element1 in enumerate(elements_op):
         for element2 in elements_op[i + 1:]:
-            p += Guess(ElementToElement(element1, element2, operator))
+            p += Guess(ElementToElement(element1, element2, f"type({operator_el})"))
 
     elements_pr = list(set(elements_pr))
     for i, element1 in enumerate(elements_pr):
         for element2 in elements_pr[i + 1:]:
-            p += Guess(ElementToElement(element1, element2, predicate))
+            p += Guess(ElementToElement(element1, element2, f"type({predicate_el_1})"))
+            p += Guess(ElementToElement(element1, element2, f"type({predicate_el_2})"))
 
     with ElementToElement(element1=var("e1"), element2=var("e2"), type_node=var("type")) as e2e:
         p += Assert(None).when(e2e).otherwise(1, 1, e2e.element1, e2e.element2, e2e.type_node)
@@ -599,6 +654,22 @@ def translate_no_pre():
         for edge in graph:
             p += edge
 
+    for dur in duration_graph_1 + duration_graph_2:
+        if dur.original.value == 1:
+            p += dur
+        else:
+            p += Guess(dur)
+
+    for dur1 in duration_graph_1:
+        get_mapping = []
+        for dur2 in duration_graph_2:
+            if dur1.original.value == 1 and dur1.type.value == "Natural" and dur1.type.value == dur2.type.value and dur1.value.value != dur2.value.value:
+                if dur2.value.value not in get_mapping:
+                    get_mapping.append(dur2.value.value)
+                    notes = '(' + str(dur1.value.value) + ";" + str(dur2.value.value) + ')'
+                    p += Guess(Duration(identifier=dur1.identifier.value, original=1, graph=dur1.graph.value,
+                                        type=dur1.type.value, value=dur2.value, notes=notes))
+
     with Node(identifier=var("id"), original=0, graph=var("graph"), elements=var("elements"), type_node=var("type"),
               name=var("name"), notes=hide()) as n:
         p += Assert(None).when(n).otherwise(1, 3, n.identifier, n.graph)
@@ -612,10 +683,12 @@ def translate_no_pre():
 
     with Node(identifier=var("id2"), graph=g2, original=var("original2"), elements=var("elements1"), name=var("name1"),
               type_node=var("type"), notes=var("notes1")) as n1:
-        with Node(identifier=var("id1"), graph=g1, original=hide(), elements=n1.elements, name=hide(),
-                  type_node=n1.type_node, notes=var("notes2")) as n2:
-            with Map(from_=n2.identifier, to_=n1.identifier, notes1=n1.notes, notes2=n2.notes) as m:
-                p += Guess({m: n1}, exactly=1).when(n2)
+        with Node(identifier=var("id1"), graph=g1, original=hide(), elements=hide(), name=hide(),
+                  type_node=n1.type_node, notes=hide()) as n2:
+            with Node(identifier=var("id1"), graph=g1, original=hide(), elements=n1.elements, name=hide(),
+                      type_node=n2.type_node, notes=var("notes2")) as n3:
+                with Map(from_=n2.identifier, to_=n1.identifier, notes1=n1.notes, notes2=n3.notes) as m:
+                    p += Guess({m: (n1, n3)}, exactly=1).when(n2)
 
     with ElementToElement(element2=var("elements1"), element1=var("elements2"), type_node=var("type")) as e2e, Node(
             identifier=var("id"), original=1, graph=var("graph"), name=var("name"), type_node=e2e.type_node,
@@ -654,6 +727,76 @@ def translate_no_pre():
                  relation=e1.relation) as e2:
         p += Define(e_new).when(m1, m2, e1, ~e2)
 
+    with Val(costDuration="duration",identifier=var("id"), original=var("O"), graph=var("G"), type=var("T"),
+                  value=var("v"), notes=var("N")) as val:
+        with Duration(identifier=val.identifier, original=val.original, graph=val.graph, type=val.type, value=val.value,
+                      notes=val.notes) as d:
+            p += Define(val).when(d)
+
+    with Val(costDuration="cost",identifier=var("id"), original=var("O"), graph=var("G"), type=var("T"),
+                  value=var("v"), notes=var("N")) as val:
+        with Cost(identifier=val.identifier, original=val.original, graph=val.graph, type=val.type, value=val.value,
+                      notes=val.notes) as c:
+            p += Define(val).when(c)
+
+    with Val(costDuration=var("T"), identifier=var("id"), original=0, graph=hide(), type=hide(),
+                  value=var("id"), notes=hide()) as d1:
+        p += Assert(None).when(d1).otherwise(1, 2, d1.identifier, d1.costDuration)
+
+    with Val(costDuration=var("T"), identifier=var("id"), original=hide(), graph=g1, type=var("t1"),
+                  value=hide(), notes=hide()) as d1, \
+            Val(costDuration=var("T"), identifier=var("id"), original=hide(),
+                     graph=g1, type=var("t2"), value=hide(), notes=hide()) as d2:
+        p += Assert(None).when(d1, d2, d1.type > d2.type).otherwise(1, 2, d1.identifier, d1.costDuration)
+
+    with Val(costDuration=var("T"), identifier=var("id"), original=hide(), graph=g1, type=var("t"),
+                  value=var("v1"), notes=hide()) as d1, \
+            Val(costDuration=var("T"), identifier=var("id"), original=hide(), graph=g1, type=d1.type, value=var("v2"), notes=hide()) as d2:
+        p += Assert(None).when(d1, d2, d1.value > d2.value).otherwise(1, 1, d1.identifier, d1.value, d1.costDuration)
+
+    with ToMap(to_=var("N2"), from_=var("N1")) as tmap, Map(from_=tmap.from_, to_=tmap.to_) as map:
+        with Node(graph=g1, identifier=tmap.from_, notes=hide(), original=hide(), type_node="type(Operator,Durative)",
+                  elements=hide(), name=hide()) as n1:
+            p += Define(tmap).when(map, n1)
+
+    with ToMap(to_=var("N2"), from_=var("N1")) as tmap:
+        with Val(costDuration=var("CD"), identifier=tmap.from_, original=hide(), graph=g1, type=hide(), value=hide(), notes=hide()) as d1:
+            with Val(costDuration=var("CD"), identifier=tmap.to_, original=hide(), graph=g2, type=var("T"), value=hide(),
+                          notes=var("Notes1")) as d2, Val(costDuration=var("CD"), identifier=d1.identifier, original=hide(), graph=g1,
+                                                               type=var("T"), value=hide(),
+                                                               notes=var("Notes2")) as d3:
+                with MapValues(to_=var("N2"), from_=var("N1"), notes1=var("Notes1"), notes2=var("Notes2")) as mapd:
+                    p += Guess({mapd: (d2, d3)}, exactly=1).when(tmap, d1)
+
+    with ToMap(to_=var("N2"), from_=var("N1")) as tmap:
+        with Val(costDuration=var("T"), identifier=tmap.from_, original=hide(), graph=g1, type="Function", value=hide(),
+                      notes=hide()) as d1:
+            with Val(costDuration=var("T"), identifier=tmap.to_, original=hide(), graph=g2, type="Natural", value=var("V1"),
+                          notes=hide()) as d2:
+                with Val(costDuration=var("T"), identifier=d1.identifier, original=1, graph=g1, type="Natural", value=d2.value,
+                              notes="('Function';'Natural')") as d3:
+                    p += Define(d3).when(tmap, d2, d1)
+
+    with MapValues(to_=var("N2"), from_=var("N1"), notes1=hide(), notes2=var("Notes")) as mapd:
+        with Val(costDuration=var("T"), identifier=tmap.to_, original=hide(), graph=g2, type="Natural",
+                      value=var("Value"), notes=hide()) as d1:
+            with Val(costDuration=var("T"), identifier=tmap.from_, original=hide(), graph=g1, type=d1.type,
+                          value=d1.value, notes=mapd.notes2) as d2:
+                p += Assert(False).when(mapd, d1, ~d2)
+
+    with MapValues(to_=var("N2"), from_=var("N1"), notes2=hide(), notes1=var("Notes")) as mapd:
+        with Val(costDuration=var("T"), identifier=tmap.to_, original=hide(), graph=g2, type="Function",
+                      value=var("Value2"), notes=mapd.notes1) as d1:
+            with Val(costDuration=var("T"), identifier=tmap.from_, original=hide(), graph=g1, type="Function",
+                          value=var("Value1"), notes=hide()) as d2:
+                with Map(to_=d1.value, from_=d2.value, notes2=hide(), notes1=hide()) as map:
+                    p += Assert(False).when(mapd, d1, d2, ~map)
+
+    with Val(costDuration=var("T"), identifier=var("Id"), original=hide(), graph=g2, type=hide(),
+                  value=hide(), notes=hide()) as d:
+        with MapValues(to_=d.identifier, from_=var("V")) as mapd:
+            p += Assert(False).when(d, Count({mapd.from_: mapd}) != 1)
+
     return p
 
 
@@ -665,7 +808,7 @@ def write_encoding(path, p):
 def run_process(p, path):
     print("Starting search")
     solver = SolverWrapper(solver_path="/opt/homebrew/bin/clingo")
-    res = solver.solve(problem=p, options=["-t 8"], timeout=120)
+    res = solver.solve(problem=p, options=["-t 8"], timeout=30)
     solution = ""
 
     if solver.killed:

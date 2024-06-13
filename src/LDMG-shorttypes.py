@@ -111,19 +111,20 @@ def processProblem(domain,problem,graph,no):
 		else:
 			print(val, file=graph, end=end)
 try:
-  assert len(sys.argv) == 6
-  domainFile1 = str(sys.argv[1])
-  domainFile2 = str(sys.argv[3])
-  problemFile1 = str(sys.argv[2])
-  problemFile2 = str(sys.argv[4])
-  graphFile = str(sys.argv[5])
+	  print(sys.argv)
+	  assert len(sys.argv) == 6
+	  domainFile1 = str(sys.argv[1])
+	  domainFile2 = str(sys.argv[3])
+	  problemFile1 = str(sys.argv[2])
+	  problemFile2 = str(sys.argv[4])
+	  graphFile = str(sys.argv[5])
 
-  graph=open(graphFile,'w')
+	  graph=open(graphFile,'w')
    
   
 
-  processProblem(domainFile1,problemFile1,graph,1)
-  processProblem(domainFile2,problemFile2,graph,2)
+	  processProblem(domainFile1,problemFile1,graph,1)
+	  processProblem(domainFile2,problemFile2,graph,2)
 
 except AssertionError:
   print("usage: python3 LDMG.py <domainFile1> <probFile1> <domainFile2> <probFile2> <graphFile>")

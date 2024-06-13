@@ -1,0 +1,70 @@
+% Name-1
+pfile0
+% Edges-1
+0;0;dur;Natural
+0;3;Vx1=Vy1;pre;at_start
+0;4;Vx1=Vy1;add;at_start
+0;3;Vx1=Vy1;del;at_start
+0;4;Vx1=Vy1;del;at_end
+0;7;Vx1=Vy1;add;at_end
+0;8;Vx1=Vy1;del;at_end
+1;1;dur;Natural
+1;4;Vx1=Vy1;pre;at_start
+1;5;Vx1=Vy1;add;at_start
+1;5;Vx1=Vy1;del;at_end
+1;8;Vx1=Vy1;add;at_end
+2;2;dur;Natural
+2;5;Vx1=Vy1;pre;at_start
+2;6;Vx1=Vy1;add;at_start
+2;6;Vx1=Vy1;del;at_end
+2;7;Vx1=Vy1;del;at_end
+2;9;Vx1=Vy1;add;at_end
+% Nodes-1
+duration_0(5.0)
+action_type1(Vy1)
+duration_1(4.0)
+action_type2(Vy1)
+duration_2(1.0)
+action_type3(Vy1)
+norepeat(Vx1)
+condition1(Vx1)
+condition2(Vx1)
+condition3(Vx1)
+target1(Vx1)
+target2(Vx1)
+target3(Vx1)
+% Name-2
+pfile1
+% Edges-2
+0;0;dur;Natural
+0;3;Vx1=Vy1;pre;at_start
+0;4;Vx1=Vy1;add;at_start
+0;3;Vx1=Vy1;del;at_start
+0;4;Vx1=Vy1;del;at_end
+0;7;Vx1=Vy1;add;at_end
+0;8;Vx1=Vy1;del;at_end
+1;1;dur;Natural
+1;4;Vx1=Vy1;pre;at_start
+1;5;Vx1=Vy1;add;at_start
+1;5;Vx1=Vy1;del;at_end
+1;8;Vx1=Vy1;add;at_end
+2;2;dur;Natural
+2;5;Vx1=Vy1;pre;at_start
+2;6;Vx1=Vy1;add;at_start
+2;6;Vx1=Vy1;del;at_end
+2;7;Vx1=Vy1;del;at_end
+2;9;Vx1=Vy1;add;at_end
+% Nodes-2
+duration_0(5.0)
+paction_type1(Vy1)
+duration_1(4.0)
+paction_type2(Vy1)
+duration_2(1.0)
+paction_type3(Vy1)
+pnorepeat(Vx1)
+pcondition1(Vx1)
+pcondition2(Vx1)
+pcondition3(Vx1)
+ptarget1(Vx1)
+ptarget2(Vx1)
+ptarget3(Vx1)
