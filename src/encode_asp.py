@@ -498,27 +498,39 @@ def translate_pre():
               name=var("name"), notes=hide()) as n:
         p += Assert(None).when(n).otherwise(1, 4, n.identifier, n.graph)
 
-    with Duration(identifier=var("id"), original=0, graph=hide(), type=hide(),
+    with Val(costDuration=var("Type"), identifier=var("id"), original=0, graph=hide(), type=hide(),
                   value=var("id"), notes=hide()) as d1:
-        p += Assert(None).when(d1).otherwise(1, 2, d1.identifier)
+        p += Assert(None).when(d1).otherwise(1, 2, d1.costDuration, d1.identifier)
 
-    with Duration(identifier=var("id"), original=hide(), graph=g1, type=var("t1"),
+    with Val(costDuration=var("Type"), identifier=var("id"), original=hide(), graph=g1, type=var("t1"),
                   value=hide(), notes=hide()) as d1, \
-            Duration(identifier=var("id"), original=hide(),
+            Val(costDuration=var("Type"), identifier=var("id"), original=hide(),
                      graph=g1, type=var("t2"), value=hide(), notes=hide()) as d2:
-        p += Assert(None).when(d1, d2, d1.type > d2.type).otherwise(1, 2, d1.identifier)
+        p += Assert(None).when(d1, d2, d1.type > d2.type).otherwise(1, 2, d1.costDuration, d1.identifier)
 
-    with Duration(identifier=var("id"), original=hide(), graph=g1, type=var("t"),
+    with Val(costDuration=var("Type"), identifier=var("id"), original=hide(), graph=g1, type=var("t"),
                   value=var("v1"), notes=hide()) as d1, Duration(identifier=var("id"), original=hide(), graph=g1,
                                                                  type=d1.type,
                                                                  value=var("v2"), notes=hide()) as d2:
-        p += Assert(None).when(d1, d2, d1.value > d2.value).otherwise(1, 1, d1.identifier, d1.value)
+        p += Assert(None).when(d1, d2, d1.value > d2.value).otherwise(1, 1, d1.costDuration, d1.identifier, d1.value)
 
     ## Aggiunto valore relation
     with Edge(identifier=var("id"), original=0, node1=var("n1"), node2=var("n2"), graph=var("graph"),
               label=var("label"),
               relation=var("relation")) as e:
         p += Assert(None).when(e).otherwise(1, 4, e.identifier, e.graph, e.node1, e.node2, e.label, e.relation)
+
+    with Val(costDuration="duration",identifier=var("id"), original=var("O"), graph=var("G"), type=var("T"),
+                  value=var("v"), notes=var("N")) as val:
+        with Duration(identifier=val.identifier, original=val.original, graph=val.graph, type=val.type, value=val.value,
+                      notes=val.notes) as d:
+            p += Define(val).when(d)
+
+    with Val(costDuration="cost",identifier=var("id"), original=var("O"), graph=var("G"), type=var("T"),
+                  value=var("v"), notes=var("N")) as val:
+        with Cost(identifier=val.identifier, original=val.original, graph=val.graph, type=val.type, value=val.value,
+                      notes=val.notes) as c:
+            p += Define(val).when(c)
 
     with Node(identifier=var("id2"), graph=g2, original=var("original2"), elements=var("elements1"), name=var("name1"),
               type_node=var("type"), notes=var("notes1")) as n1:
@@ -536,39 +548,39 @@ def translate_pre():
             p += Define(tmap).when(map, n1)
 
     with ToMap(to_=var("N2"), from_=var("N1")) as tmap:
-        with Duration(identifier=tmap.from_, original=hide(), graph=g1, type=hide(), value=hide(), notes=hide()) as d1:
-            with Duration(identifier=tmap.to_, original=hide(), graph=g2, type=var("T"), value=hide(),
-                          notes=var("Notes1")) as d2, Duration(identifier=d1.identifier, original=hide(), graph=g1,
+        with Val(costDuration=var("Type"), identifier=tmap.from_, original=hide(), graph=g1, type=hide(), value=hide(), notes=hide()) as d1:
+            with Val(costDuration=var("Type"), identifier=tmap.to_, original=hide(), graph=g2, type=var("T"), value=hide(),
+                          notes=var("Notes1")) as d2, Val(costDuration=var("Type"), identifier=d1.identifier, original=hide(), graph=g1,
                                                                type=var("T"), value=hide(),
                                                                notes=var("Notes2")) as d3:
                 with MapValues(to_=var("N2"), from_=var("N1"), notes1=var("Notes1"), notes2=var("Notes2")) as mapd:
                     p += Guess({mapd: (d2, d3)}, exactly=1).when(tmap, d1)
 
     with ToMap(to_=var("N2"), from_=var("N1")) as tmap:
-        with Duration(identifier=tmap.from_, original=hide(), graph=g1, type="Function", value=hide(),
+        with Val(costDuration=var("Type"), identifier=tmap.from_, original=hide(), graph=g1, type="Function", value=hide(),
                       notes=hide()) as d1:
-            with Duration(identifier=tmap.to_, original=hide(), graph=g2, type="Natural", value=var("V1"),
+            with Val(costDuration=var("Type"), identifier=tmap.to_, original=hide(), graph=g2, type="Natural", value=var("V1"),
                           notes=hide()) as d2:
-                with Duration(identifier=d1.identifier, original=1, graph=g1, type="Natural", value=d2.value,
+                with Val(costDuration=var("Type"), identifier=d1.identifier, original=1, graph=g1, type="Natural", value=d2.value,
                               notes="('Function';'Natural')") as d3:
                     p += Define(d3).when(tmap, d2, d1)
 
     with MapValues(to_=var("N2"), from_=var("N1"), notes1=hide(), notes2=var("Notes")) as mapd:
-        with Duration(identifier=tmap.to_, original=hide(), graph=g2, type="Natural",
+        with Val(costDuration=var("Type"), identifier=tmap.to_, original=hide(), graph=g2, type="Natural",
                       value=var("Value"), notes=hide()) as d1:
-            with Duration(identifier=tmap.from_, original=hide(), graph=g1, type=d1.type,
+            with Val(costDuration=var("Type"), identifier=tmap.from_, original=hide(), graph=g1, type=d1.type,
                           value=d1.value, notes=mapd.notes2) as d2:
                 p += Assert(False).when(mapd, d1, ~d2)
 
     with MapValues(to_=var("N2"), from_=var("N1"), notes2=hide(), notes1=var("Notes")) as mapd:
-        with Duration(identifier=tmap.to_, original=hide(), graph=g2, type="Function",
+        with Val(costDuration=var("Type"), identifier=tmap.to_, original=hide(), graph=g2, type="Function",
                       value=var("Value2"), notes=mapd.notes1) as d1:
-            with Duration(identifier=tmap.from_, original=hide(), graph=g1, type="Function",
+            with Val(costDuration=var("Type"), identifier=tmap.from_, original=hide(), graph=g1, type="Function",
                           value=var("Value1"), notes=hide()) as d2:
                 with Map(to_=d1.value, from_=d2.value, notes2=hide(), notes1=hide()) as map:
                     p += Assert(False).when(mapd, d1, d2, ~map)
 
-    with Duration(identifier=var("Id"), original=hide(), graph=g2, type=hide(),
+    with Val(costDuration=var("Type"), identifier=var("Id"), original=hide(), graph=g2, type=hide(),
                   value=hide(), notes=hide()) as d:
         with MapValues(to_=d.identifier, from_=var("V")) as mapd:
             p += Assert(False).when(d, Count({mapd.from_: mapd}) != 1)
@@ -886,6 +898,38 @@ def run_process(p, path):
                             f"Add edge of type {assignment.label} in {assignment.graph} from {nodes_graph_2[assignment.node1.value].name} to {nodes_graph_2[assignment.node2.value].name} with the relations {assignment.relation.value}")
                         solution += (
                             f"Add edge of type {assignment.label} in {assignment.graph} from {nodes_graph_2[assignment.node1.value].name} to {nodes_graph_2[assignment.node2.value].name} with the relations {assignment.relation.value} \n")
+
+        result = answer.get_atom_occurrences(Val())
+        for assignment in result:
+            if assignment.original.value == 0:
+                print(
+                    f"Add {assignment.costDuration} {assignment.identifier} of type {assignment.type} with value {assignment.value} in {assignment.graph}")
+                solution += (
+                    f"Add {assignment.costDuration} {assignment.identifier} of type {assignment.type} with value {assignment.value} in {assignment.graph} \n")
+
+        result = answer.get_atom_occurrences(MapValues())
+        for assignment in result:
+            try:
+                n1 = duration_graph_1[assignment.from_.value]
+                n2 = duration_graph_2[assignment.to_.value]
+            except:
+                pass #Da mettere cost_graph_1, 2
+
+            print(
+                f"Map value {n1.identifier} with value {n1.value} of {n1.graph} to value {n2.identifier} with value {n2.value} of {n2.graph}")
+            solution += (
+                f"Map value {n1.identifier} with value {n1.value} of {n1.graph} to value {n2.identifier} with value {n2.value} of {n2.graph}\n")
+
+            (notes1to, notes1from) = [x.strip("()' ") for x in assignment.notes1.value.split(";")]
+            (notes2to, notes2from) = [x.strip("()' ") for x in assignment.notes2.value.split(";")]
+            if notes1from != "empty":
+                print("\tRemapping variables %s --> %s" % (notes1from, notes1to))
+                solution += ("\tRemapping variables %s --> %s \n" % (notes1from, notes1to))
+
+            if notes2from != "empty":
+                print("\tRemapping variables %s --> %s" % (notes2from, notes2to))
+                solution += ("\tRemapping variables %s --> %s \n" % (notes2from, notes2to))
+
 
     elif res.status != Result.NO_SOLUTION:
         print("Cannot found a solution in less than 30 seconds")

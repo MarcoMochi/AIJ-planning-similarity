@@ -242,18 +242,20 @@ duration(2, 1, "pfile0", "Natural", 1, "('empty'; 'empty')").
 {duration(6, 1, "p1", "Natural", 3, "(1;3)")}.
  :~ node(VAR_id, 1, VAR_graph, _, _, _, VAR_notes1); node(VAR_id, 1, VAR_graph, _, _, _, VAR_notes2); VAR_notes1 != VAR_notes2. [1@3, VAR_id]
  :~ node(VAR_id, 0, VAR_graph, VAR_name, VAR_type, VAR_elements, _). [1@4, VAR_id,VAR_graph]
- :~ duration(VAR_id, 0, _, _, VAR_id, _). [1@2, VAR_id]
- :~ duration(VAR_id, _, "p1", VAR_t1, _, _); duration(VAR_id, _, "p1", VAR_t2, _, _); VAR_t1 > VAR_t2. [1@2, VAR_id]
- :~ duration(VAR_id, _, "p1", VAR_t, VAR_v1, _); duration(VAR_id, _, "p1", VAR_t, VAR_v2, _); VAR_v1 > VAR_v2. [1@1, VAR_id,VAR_v1]
+ :~ val(VAR_Type, VAR_id, 0, _, _, VAR_id, _). [1@2, VAR_Type,VAR_id]
+ :~ val(VAR_Type, VAR_id, _, "p1", VAR_t1, _, _); val(VAR_Type, VAR_id, _, "p1", VAR_t2, _, _); VAR_t1 > VAR_t2. [1@2, VAR_Type,VAR_id]
+ :~ val(VAR_Type, VAR_id, _, "p1", VAR_t, VAR_v1, _); duration(VAR_id, _, "p1", VAR_t, VAR_v2, _); VAR_v1 > VAR_v2. [1@1, VAR_Type,VAR_id,VAR_v1]
  :~ edge(VAR_id, 0, VAR_graph, VAR_n1, VAR_n2, VAR_label, VAR_relation). [1@4, VAR_id,VAR_graph,VAR_n1,VAR_n2,VAR_label,VAR_relation]
+val("duration", VAR_id, VAR_O, VAR_G, VAR_T, VAR_v, VAR_N) :- duration(VAR_id, VAR_O, VAR_G, VAR_T, VAR_v, VAR_N).
+val("cost", VAR_id, VAR_O, VAR_G, VAR_T, VAR_v, VAR_N) :- cost(VAR_id, VAR_O, VAR_G, VAR_T, VAR_v, VAR_N).
 {map(VAR_id1, VAR_id2, VAR_notes1, VAR_notes2) : node(VAR_id2, VAR_original2, "pfile0", VAR_name1, VAR_type, VAR_elements1, VAR_notes1), node(VAR_id1, _, "p1", _, VAR_type, VAR_elements1, VAR_notes2)} = 1 :- node(VAR_id1, _, "p1", _, VAR_type, _, _).
-toMap(VAR_N1, VAR_N2) :- map(VAR_N1, VAR_N2, Xd72aa481b0174517b93ea8a8dbeecf02, Xe4b58782899c4c43b4542305437cf9a7); node(VAR_N1, _, "p1", _, "type(Operator,Durative)", _, _).
-{mapValues(VAR_N1, VAR_N2, VAR_Notes1, VAR_Notes2) : duration(VAR_N2, _, "pfile0", VAR_T, _, VAR_Notes1), duration(VAR_N1, _, "p1", VAR_T, _, VAR_Notes2)} = 1 :- toMap(VAR_N1, VAR_N2); duration(VAR_N1, _, "p1", _, _, _).
-duration(VAR_N1, 1, "p1", "Natural", VAR_V1, "('Function';'Natural')") :- toMap(VAR_N1, VAR_N2); duration(VAR_N2, _, "pfile0", "Natural", VAR_V1, _); duration(VAR_N1, _, "p1", "Function", _, _).
- :- mapValues(VAR_N1, VAR_N2, _, VAR_Notes); duration(VAR_N2, _, "pfile0", "Natural", VAR_Value, _); not duration(VAR_N1, _, "p1", "Natural", VAR_Value, VAR_Notes).
- :- mapValues(VAR_N1, VAR_N2, VAR_Notes, _); duration(VAR_N2, _, "pfile0", "Function", VAR_Value2, VAR_Notes); duration(VAR_N1, _, "p1", "Function", VAR_Value1, _); not map(VAR_Value1, VAR_Value2, _, _).
- :- duration(VAR_Id, _, "pfile0", _, _, _); #count{VAR_V : mapValues(VAR_V, VAR_Id, X299d228cf0b543ccbd1e921c81572aea, X27896f97c91a47999649142433583034)} != 1.
- :- node(VAR_id, _, "pfile0", _, _, _, _); #count{VAR_v : map(VAR_v, VAR_id, X65a24542c0a34446aa21ce343c0d2a74, X5da797ade059406aa2979b028be51067)} != 1.
+toMap(VAR_N1, VAR_N2) :- map(VAR_N1, VAR_N2, Xadc363c5cac047f9b162246882942fb9, Xce7a4aaa0a0c44469a2cb1b4b0c86a0e); node(VAR_N1, _, "p1", _, "type(Operator,Durative)", _, _).
+{mapValues(VAR_N1, VAR_N2, VAR_Notes1, VAR_Notes2) : val(VAR_Type, VAR_N2, _, "pfile0", VAR_T, _, VAR_Notes1), val(VAR_Type, VAR_N1, _, "p1", VAR_T, _, VAR_Notes2)} = 1 :- toMap(VAR_N1, VAR_N2); val(VAR_Type, VAR_N1, _, "p1", _, _, _).
+val(VAR_Type, VAR_N1, 1, "p1", "Natural", VAR_V1, "('Function';'Natural')") :- toMap(VAR_N1, VAR_N2); val(VAR_Type, VAR_N2, _, "pfile0", "Natural", VAR_V1, _); val(VAR_Type, VAR_N1, _, "p1", "Function", _, _).
+ :- mapValues(VAR_N1, VAR_N2, _, VAR_Notes); val(VAR_Type, VAR_N2, _, "pfile0", "Natural", VAR_Value, _); not val(VAR_Type, VAR_N1, _, "p1", "Natural", VAR_Value, VAR_Notes).
+ :- mapValues(VAR_N1, VAR_N2, VAR_Notes, _); val(VAR_Type, VAR_N2, _, "pfile0", "Function", VAR_Value2, VAR_Notes); val(VAR_Type, VAR_N1, _, "p1", "Function", VAR_Value1, _); not map(VAR_Value1, VAR_Value2, _, _).
+ :- val(VAR_Type, VAR_Id, _, "pfile0", _, _, _); #count{VAR_V : mapValues(VAR_V, VAR_Id, X1caf6a90312a40ea836fead8a2c3dea3, Xdea13e0a9b264fa293e7116755fe6b7d)} != 1.
+ :- node(VAR_id, _, "pfile0", _, _, _, _); #count{VAR_v : map(VAR_v, VAR_id, X938fcdac83a7454f9fdca5ebe8294445, X9fa7c67baaff47d68fca2429ff41f157)} != 1.
  :- #sum{1,VAR_id : node(VAR_id, _, "p1", _, _, _, _); -1,VAR_id : node(VAR_id, _, "pfile0", _, _, _, _)} != 0.
-edge(500, 0, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, X774d0080108b4b4f84f3a3f1c43aeebe, X55fa223cd0464a43a0aaf2488ea2c4e0); map(VAR_3, VAR_4, Xa261436b241d4be2aa6c093b59fa9040, Xcfb3cbaddec647ca8c82d3210fc0116e); edge(_, 1, "p1", VAR_1, VAR_3, VAR_label, VAR_relation); not edge(_, 1, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation).
-edge(500, 0, "p1", VAR_1, VAR_3, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, X39979e0290eb42c08f9e9af042ff9d85, Xf94e37e4fff842ef9aa7e615b93c1a0a); map(VAR_3, VAR_4, X898a743cda004a788f251b8c9d0e6f48, X36c01858418447f3bcd01910103ce5f6); edge(_, 1, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation); not edge(_, 1, "p1", VAR_1, VAR_3, VAR_label, VAR_relation).
+edge(500, 0, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, X17e9bb9d64774723887524743a77a133, X810c5bec1ed74718a43603bbaccfcf1b); map(VAR_3, VAR_4, X43c5ef3989e34f26a71d146fc9842e90, X58033a0e00944b46a34bfa5a77fe2e91); edge(_, 1, "p1", VAR_1, VAR_3, VAR_label, VAR_relation); not edge(_, 1, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation).
+edge(500, 0, "p1", VAR_1, VAR_3, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, X63177196feb44ecc981419e516ad1ed4, X1291dc0691294b9dad02157ae4de61b4); map(VAR_3, VAR_4, X172f18d7ae274cb0ad153050d42faf8a, X161bc2b918964c959777b5213295c5b3); edge(_, 1, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation); not edge(_, 1, "p1", VAR_1, VAR_3, VAR_label, VAR_relation).

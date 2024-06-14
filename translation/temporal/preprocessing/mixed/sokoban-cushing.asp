@@ -101,18 +101,20 @@ duration(2, 1, "pfile0", "Natural", 1, "('empty'; 'empty')").
 {duration(2, 1, "p008-hexoban-temporal", "Natural", 4, "(1;4)")}.
  :~ node(VAR_id, 1, VAR_graph, _, _, _, VAR_notes1); node(VAR_id, 1, VAR_graph, _, _, _, VAR_notes2); VAR_notes1 != VAR_notes2. [1@3, VAR_id]
  :~ node(VAR_id, 0, VAR_graph, VAR_name, VAR_type, VAR_elements, _). [1@4, VAR_id,VAR_graph]
- :~ duration(VAR_id, 0, _, _, VAR_id, _). [1@2, VAR_id]
- :~ duration(VAR_id, _, "p008-hexoban-temporal", VAR_t1, _, _); duration(VAR_id, _, "p008-hexoban-temporal", VAR_t2, _, _); VAR_t1 > VAR_t2. [1@2, VAR_id]
- :~ duration(VAR_id, _, "p008-hexoban-temporal", VAR_t, VAR_v1, _); duration(VAR_id, _, "p008-hexoban-temporal", VAR_t, VAR_v2, _); VAR_v1 > VAR_v2. [1@1, VAR_id,VAR_v1]
+ :~ val(VAR_Type, VAR_id, 0, _, _, VAR_id, _). [1@2, VAR_Type,VAR_id]
+ :~ val(VAR_Type, VAR_id, _, "p008-hexoban-temporal", VAR_t1, _, _); val(VAR_Type, VAR_id, _, "p008-hexoban-temporal", VAR_t2, _, _); VAR_t1 > VAR_t2. [1@2, VAR_Type,VAR_id]
+ :~ val(VAR_Type, VAR_id, _, "p008-hexoban-temporal", VAR_t, VAR_v1, _); duration(VAR_id, _, "p008-hexoban-temporal", VAR_t, VAR_v2, _); VAR_v1 > VAR_v2. [1@1, VAR_Type,VAR_id,VAR_v1]
  :~ edge(VAR_id, 0, VAR_graph, VAR_n1, VAR_n2, VAR_label, VAR_relation). [1@4, VAR_id,VAR_graph,VAR_n1,VAR_n2,VAR_label,VAR_relation]
+val("duration", VAR_id, VAR_O, VAR_G, VAR_T, VAR_v, VAR_N) :- duration(VAR_id, VAR_O, VAR_G, VAR_T, VAR_v, VAR_N).
+val("cost", VAR_id, VAR_O, VAR_G, VAR_T, VAR_v, VAR_N) :- cost(VAR_id, VAR_O, VAR_G, VAR_T, VAR_v, VAR_N).
 {map(VAR_id1, VAR_id2, VAR_notes1, VAR_notes2) : node(VAR_id2, VAR_original2, "pfile0", VAR_name1, VAR_type, VAR_elements1, VAR_notes1), node(VAR_id1, _, "p008-hexoban-temporal", _, VAR_type, VAR_elements1, VAR_notes2)} = 1 :- node(VAR_id1, _, "p008-hexoban-temporal", _, VAR_type, _, _).
-toMap(VAR_N1, VAR_N2) :- map(VAR_N1, VAR_N2, X875b9280c7074c37a79954c4b2987dda, X2b8912887f244b63909f3461335dd528); node(VAR_N1, _, "p008-hexoban-temporal", _, "type(Operator,Durative)", _, _).
-{mapValues(VAR_N1, VAR_N2, VAR_Notes1, VAR_Notes2) : duration(VAR_N2, _, "pfile0", VAR_T, _, VAR_Notes1), duration(VAR_N1, _, "p008-hexoban-temporal", VAR_T, _, VAR_Notes2)} = 1 :- toMap(VAR_N1, VAR_N2); duration(VAR_N1, _, "p008-hexoban-temporal", _, _, _).
-duration(VAR_N1, 1, "p008-hexoban-temporal", "Natural", VAR_V1, "('Function';'Natural')") :- toMap(VAR_N1, VAR_N2); duration(VAR_N2, _, "pfile0", "Natural", VAR_V1, _); duration(VAR_N1, _, "p008-hexoban-temporal", "Function", _, _).
- :- mapValues(VAR_N1, VAR_N2, _, VAR_Notes); duration(VAR_N2, _, "pfile0", "Natural", VAR_Value, _); not duration(VAR_N1, _, "p008-hexoban-temporal", "Natural", VAR_Value, VAR_Notes).
- :- mapValues(VAR_N1, VAR_N2, VAR_Notes, _); duration(VAR_N2, _, "pfile0", "Function", VAR_Value2, VAR_Notes); duration(VAR_N1, _, "p008-hexoban-temporal", "Function", VAR_Value1, _); not map(VAR_Value1, VAR_Value2, _, _).
- :- duration(VAR_Id, _, "pfile0", _, _, _); #count{VAR_V : mapValues(VAR_V, VAR_Id, Xffe745d5efda44fd8712cdddbc0ddb04, X0471e03bd7b34e2c93172c9d5da96697)} != 1.
- :- node(VAR_id, _, "pfile0", _, _, _, _); #count{VAR_v : map(VAR_v, VAR_id, Xfc27613c1cd24020a3d33a180b32900c, Xd295b92a4e6d48cc944d3b16ac4dab9f)} != 1.
+toMap(VAR_N1, VAR_N2) :- map(VAR_N1, VAR_N2, X1733f3813a77452ba2537d2d41fa2301, Xfd7b5a819b914a0cbe61cc61abb03803); node(VAR_N1, _, "p008-hexoban-temporal", _, "type(Operator,Durative)", _, _).
+{mapValues(VAR_N1, VAR_N2, VAR_Notes1, VAR_Notes2) : val(VAR_Type, VAR_N2, _, "pfile0", VAR_T, _, VAR_Notes1), val(VAR_Type, VAR_N1, _, "p008-hexoban-temporal", VAR_T, _, VAR_Notes2)} = 1 :- toMap(VAR_N1, VAR_N2); val(VAR_Type, VAR_N1, _, "p008-hexoban-temporal", _, _, _).
+val(VAR_Type, VAR_N1, 1, "p008-hexoban-temporal", "Natural", VAR_V1, "('Function';'Natural')") :- toMap(VAR_N1, VAR_N2); val(VAR_Type, VAR_N2, _, "pfile0", "Natural", VAR_V1, _); val(VAR_Type, VAR_N1, _, "p008-hexoban-temporal", "Function", _, _).
+ :- mapValues(VAR_N1, VAR_N2, _, VAR_Notes); val(VAR_Type, VAR_N2, _, "pfile0", "Natural", VAR_Value, _); not val(VAR_Type, VAR_N1, _, "p008-hexoban-temporal", "Natural", VAR_Value, VAR_Notes).
+ :- mapValues(VAR_N1, VAR_N2, VAR_Notes, _); val(VAR_Type, VAR_N2, _, "pfile0", "Function", VAR_Value2, VAR_Notes); val(VAR_Type, VAR_N1, _, "p008-hexoban-temporal", "Function", VAR_Value1, _); not map(VAR_Value1, VAR_Value2, _, _).
+ :- val(VAR_Type, VAR_Id, _, "pfile0", _, _, _); #count{VAR_V : mapValues(VAR_V, VAR_Id, X05fee418ec7849768c8b2cf61b22dc5e, Xf44f290674454caeb26f1f43dcd2571d)} != 1.
+ :- node(VAR_id, _, "pfile0", _, _, _, _); #count{VAR_v : map(VAR_v, VAR_id, X276d14e13ab54cd99e44110fa9ab9237, X318b5dca65a14783be417a12da6a10a4)} != 1.
  :- #sum{1,VAR_id : node(VAR_id, _, "p008-hexoban-temporal", _, _, _, _); -1,VAR_id : node(VAR_id, _, "pfile0", _, _, _, _)} != 0.
-edge(500, 0, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, X9834753f34584967ae924987aa220600, X365d5df8a082431aa1225a732ca98b49); map(VAR_3, VAR_4, X776bffeec7434e6ca2d6bb4188e8ad97, X2f07c3b91b7f4cfa9f3e0b4d88900b15); edge(_, 1, "p008-hexoban-temporal", VAR_1, VAR_3, VAR_label, VAR_relation); not edge(_, 1, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation).
-edge(500, 0, "p008-hexoban-temporal", VAR_1, VAR_3, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, Xbb7f8750501d4ec5a9504e48fb299eb3, X569ca644c7b64a85bab4ad97cae06814); map(VAR_3, VAR_4, Xb51cf689b5ae4beb98c3e5e7001c348c, X54f9ae9c98ef4630a9ff85a3bae00f21); edge(_, 1, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation); not edge(_, 1, "p008-hexoban-temporal", VAR_1, VAR_3, VAR_label, VAR_relation).
+edge(500, 0, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, Xd2744dca7996451c94580d79fab01062, X64c3a831256c4824a25677446d867db8); map(VAR_3, VAR_4, Xacc3a917b1dc4e288f576065f5b147c4, Xfb82184021674c059e1e882a99b1cb3f); edge(_, 1, "p008-hexoban-temporal", VAR_1, VAR_3, VAR_label, VAR_relation); not edge(_, 1, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation).
+edge(500, 0, "p008-hexoban-temporal", VAR_1, VAR_3, VAR_label, VAR_relation) :- map(VAR_1, VAR_2, Xa05b4a6aeb7841e4b39fdd5e6d4946a3, X258ba5de25af4ad6961525fbca594ba2); map(VAR_3, VAR_4, X0eae07d142d24e2d81f5ccf1bfb05dfe, X04bb87c3df8244f09f1547c58155df7b); edge(_, 1, "pfile0", VAR_2, VAR_4, VAR_label, VAR_relation); not edge(_, 1, "p008-hexoban-temporal", VAR_1, VAR_3, VAR_label, VAR_relation).
