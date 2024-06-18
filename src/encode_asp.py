@@ -121,6 +121,8 @@ nodes_graph_1 = []
 nodes_graph_2 = []
 duration_graph_1 = []
 duration_graph_2 = []
+cost_graph_1 = []
+cost_graph_2 = []
 graph1 = []
 graph2 = []
 elements = []
@@ -167,7 +169,7 @@ def read_graphs(path, preprocessing):
             elif line == "% Edges-2":
                 mode = 4
             elif mode == 1 or mode == 3:
-                if line.startswith("duration_"):
+                if line.startswith("duration_") or line.startswith("cost_"):
                     count_lines += 0
                     continue
                 line_ = line.replace(")", "")
@@ -176,10 +178,6 @@ def read_graphs(path, preprocessing):
                 if len(params[1]) == 0:
                     value = ""
                 else:
-                    type_node = "std"
-                    durative = False
-                    duration = None
-                    durative_type = None
                     if ";" in params[1]:
                         params[1], label_node = params[1].split(";")
 
@@ -282,12 +280,38 @@ def read_graphs(path, preprocessing):
                                 type_g1[res[0]] = operator_el
                                 duration_graph_1.append(
                                     Duration(identifier=int(res[0]), original=1, graph=g1,
-                                             type=type_node, value=find_number(res[1], mode, lines), notes="('empty'; 'empty')"))
+                                             type=type_node, value=find_number(res[1], mode, lines, "duration"), notes="('empty'; 'empty')"))
                             else:
                                 type_g2[res[0]] = operator_el
                                 duration_graph_2.append(
                                     Duration(identifier=int(res[0]), original=1, graph=g2,
-                                             type=type_node, value=find_number(res[1], mode, lines), notes="('empty'; 'empty')"))
+                                             type=type_node, value=find_number(res[1], mode, lines, "duration"), notes="('empty'; 'empty')"))
+                    elif res[2] == "cost":
+                        if type_node == "Function":
+                            if mode == 2:
+                                type_g1[res[0]] = operator_el
+                                type_g1[res[1]] = predicate_el_2
+                                cost_graph_1.append(
+                                    Cost(identifier=int(res[0]), original=1, graph=g1,
+                                             type=type_node, value=int(res[1]), notes="('empty'; 'empty')"))
+                            else:
+                                type_g2[res[0]] = operator_el
+                                type_g2[res[1]] = predicate_el_2
+
+                                cost_graph_2.append(
+                                    Cost(identifier=int(res[0]), original=1, graph=g2,
+                                             type=type_node, value=int(res[1]), notes="('empty'; 'empty')"))
+                        else:
+                            if mode == 2:
+                                type_g1[res[0]] = operator_el
+                                cost_graph_1.append(
+                                    Cost(identifier=int(res[0]), original=1, graph=g1,
+                                             type=type_node, value=find_number(res[1], mode, lines, "cost"), notes="('empty'; 'empty')"))
+                            else:
+                                type_g2[res[0]] = operator_el
+                                cost_graph_2.append(
+                                    Cost(identifier=int(res[0]), original=1, graph=g2,
+                                             type=type_node, value=find_number(res[1], mode, lines, "cost"), notes="('empty'; 'empty')"))
                 else:
                     try:
                         type_edge = res[4]
@@ -329,9 +353,10 @@ def read_graphs(path, preprocessing):
                 g2 = line
 
 
-def add_nodes(nodes_graph_i, nodes_graph_j, duration_graph_i, duration_graph_j, graph, add_op, preprocessing):
+def add_nodes(nodes_graph_i, nodes_graph_j, duration_graph_i, duration_graph_j, cost_graph_i, cost_graph_j, graph, add_op, preprocessing):
     to_add = []
     durations_to_add = []
+    cost_to_add = []
     for node1 in nodes_graph_i:
         found = False
         for node2 in nodes_graph_j:
@@ -354,6 +379,14 @@ def add_nodes(nodes_graph_i, nodes_graph_j, duration_graph_i, duration_graph_j, 
                                              type=dur.type.value, value=dur.value.value, notes="('empty'; 'empty')"))
                             else:
                                 durations_to_add.append([len(nodes_graph_j) + len(to_add) - 1, dur.type.value])
+                    for cost in cost_graph_i:
+                        if cost.identifier.value == node1.identifier.value:
+                            if cost.type.value == "Natural":
+                                cost_graph_2.append(
+                                    Cost(identifier=len(nodes_graph_j) + len(to_add) - 1, original=0, graph=graph,
+                                             type=cost.type.value, value=cost.value.value, notes="('empty'; 'empty')"))
+                            else:
+                                cost_to_add.append([len(nodes_graph_j) + len(to_add) - 1, cost.type.value])
             else:
                 to_add.append(Node(identifier=len(nodes_graph_j) + len(to_add), original=0, graph=graph,
                                    elements=node1.elements.value, name=node1.name, type_node=node1.type_node.value,
@@ -367,6 +400,14 @@ def add_nodes(nodes_graph_i, nodes_graph_j, duration_graph_i, duration_graph_j, 
                                              type=dur.type.value, value=dur.value.value, notes="('empty'; 'empty')"))
                             else:
                                 durations_to_add.append([len(nodes_graph_j) + len(to_add) - 1, dur.type.value])
+                    for cost in cost_graph_i:
+                        if cost.identifier.value == node1.identifier.value:
+                            if cost.type.value == "Natural":
+                                cost_graph_2.append(
+                                    Cost(identifier=len(nodes_graph_j) + len(to_add) - 1, original=0, graph=graph,
+                                             type=cost.type.value, value=cost.value.value, notes="('empty'; 'empty')"))
+                            else:
+                                cost_to_add.append([len(nodes_graph_j) + len(to_add) - 1, cost.type.value])
     nodes_graph_j.extend(to_add)
 
     if add_op or not preprocessing:
@@ -397,17 +438,60 @@ def add_nodes(nodes_graph_i, nodes_graph_j, duration_graph_i, duration_graph_j, 
                                         Duration(identifier=temp_id, original=0, graph=node2.graph.value,
                                                  type="Function", value=temp_node.identifier.value,
                                                  notes="('empty'; 'empty')"))
+                    for cost in cost_graph_j:
+                        if cost.identifier.value == node1.identifier.value:
+                            if cost.type.value == "Natural":
+                                cost_graph_i.append(
+                                    Cost(identifier=temp_id, original=0, graph=node2.graph.value,
+                                             type="Natural", value=cost.value.value,
+                                             notes="('empty'; 'empty')"))
+                            else:
+                                for temp_node in [funct for funct in nodes_graph_i if
+                                                  "Function" in funct.type_node.value]:
+                                    cost_graph_i.append(
+                                        Cost(identifier=temp_id, original=0, graph=node2.graph.value,
+                                                 type="Function", value=temp_node.identifier.value,
+                                                 notes="('empty'; 'empty')"))
                 else:
                     nodes_graph_i.append(Node(identifier=len(nodes_graph_i), original=0, graph=node2.graph.value,
                                               elements=node1.elements.value, name=node1.name,
                                               type_node=node1.type_node.value,
                                               notes=('empty', 'empty')))
+                    for duration in duration_graph_j:
+                        if duration.identifier.value == node1.identifier.value:
+                            if duration.type.value == "Natural":
+                                duration_graph_i.append(Duration(identifier=temp_id, original=0, graph=node2.graph.value,
+                                                                 type="Natural", value=duration.value.value, notes="('empty'; 'empty')"))
+                            else:
+                                for temp_node in [funct for funct in nodes_graph_i if "Function" in funct.type_node.value]:
+                                    duration_graph_i.append(
+                                        Duration(identifier=temp_id, original=0, graph=node2.graph.value,
+                                                 type="Function", value=temp_node.identifier.value,
+                                                 notes="('empty'; 'empty')"))
+                    for cost in cost_graph_j:
+                        if cost.identifier.value == node1.identifier.value:
+                            if cost.type.value == "Natural":
+                                cost_graph_i.append(
+                                    Cost(identifier=temp_id, original=0, graph=node2.graph.value,
+                                             type="Natural", value=cost.value.value,
+                                             notes="('empty'; 'empty')"))
+                            else:
+                                for temp_node in [funct for funct in nodes_graph_i if
+                                                  "Function" in funct.type_node.value]:
+                                    cost_graph_i.append(
+                                        Cost(identifier=temp_id, original=0, graph=node2.graph.value,
+                                                 type="Function", value=temp_node.identifier.value,
+                                                 notes="('empty'; 'empty')"))
 
     nodes = [node for node in nodes_graph_j if "Function" in node.type_node.value]
     for node in nodes:
         for adder in durations_to_add:
             node_id, node_type = adder
             duration_graph_j.append(Duration(identifier=node_id, original=0, graph=graph,
+                                             type=node_type, value=node.identifier.value, notes="('empty'; 'empty')"))
+        for adder in cost_to_add:
+            node_id, node_type = adder
+            cost_graph_j.append(Cost(identifier=node_id, original=0, graph=graph,
                                              type=node_type, value=node.identifier.value, notes="('empty'; 'empty')"))
 
 
@@ -487,6 +571,22 @@ def translate_pre():
                     notes = '(' + str(dur1.value.value) + ";" + str(dur2.value.value) + ')'
                     p += Guess(Duration(identifier=dur1.identifier.value, original=1, graph=dur1.graph.value,
                                         type=dur1.type.value, value=dur2.value, notes=notes))
+
+    for cost in cost_graph_1 + cost_graph_2:
+        if cost.original.value == 1:
+            p += cost
+        else:
+            p += Guess(cost)
+
+    for cost1 in cost_graph_1:
+        get_mapping = []
+        for cost2 in cost_graph_2:
+            if cost1.original.value == 1 and cost1.type.value == "Natural" and cost1.type.value == cost2.type.value and cost1.value.value != cost2.value.value:
+                if cost2.value.value not in get_mapping:
+                    get_mapping.append(cost2.value.value)
+                    notes = '(' + str(cost1.value.value) + ";" + str(cost2.value.value) + ')'
+                    p += Guess(Cost(identifier=cost1.identifier.value, original=1, graph=cost1.graph.value,
+                                        type=cost1.type.value, value=cost2.value, notes=notes))
 
     with Node(identifier=var("id"), original=1, graph=var("graph"), elements=hide(), type_node=hide(), name=hide(),
               notes=var("notes1")) as n1:
@@ -619,19 +719,19 @@ def translate_pre():
     return p
 
 
-def find_number(offset, mode, lines):
+def find_number(offset, mode, lines, type):
     search = False
     counter = -1
     for line in lines:
         if (line == "% Nodes-1\n" or search) and mode == 2:
             search = True
-            if line.startswith(f"duration_{offset}"):
+            if line.startswith(f"{type}_{offset}"):
                 return int(re.search(r"\((\d+[.]?\d+)\)", line).group(1).split(".")[0])
             else:
                 counter += 1
         elif (line == "% Nodes-2\n" or search) and mode == 4:
             search = True
-            if line.startswith(f"duration_{offset}"):
+            if line.startswith(f"{type}_{offset}"):
                 return int(re.search(r"\((\d+[.]?\d+)\)", line).group(1).split(".")[0])
             else:
                 counter += 1
@@ -681,6 +781,22 @@ def translate_no_pre():
                     notes = '(' + str(dur1.value.value) + ";" + str(dur2.value.value) + ')'
                     p += Guess(Duration(identifier=dur1.identifier.value, original=1, graph=dur1.graph.value,
                                         type=dur1.type.value, value=dur2.value, notes=notes))
+
+    for cost in cost_graph_1 + cost_graph_2:
+        if cost.original.value == 1:
+            p += cost
+        else:
+            p += Guess(cost)
+
+    for cost1 in cost_graph_1:
+        get_mapping = []
+        for cost2 in cost_graph_2:
+            if cost1.original.value == 1 and cost1.type.value == "Natural" and cost1.type.value == cost2.type.value and cost1.value.value != cost2.value.value:
+                if cost2.value.value not in get_mapping:
+                    get_mapping.append(cost2.value.value)
+                    notes = '(' + str(cost1.value.value) + ";" + str(cost2.value.value) + ')'
+                    p += Guess(Cost(identifier=cost1.identifier.value, original=1, graph=cost1.graph.value,
+                                        type=cost1.type.value, value=cost2.value, notes=notes))
 
     with Node(identifier=var("id"), original=0, graph=var("graph"), elements=var("elements"), type_node=var("type"),
               name=var("name"), notes=hide()) as n:
@@ -909,11 +1025,14 @@ def run_process(p, path):
 
         result = answer.get_atom_occurrences(MapValues())
         for assignment in result:
+            n1 = ""
+            n2 = ""
             try:
                 n1 = duration_graph_1[assignment.from_.value]
                 n2 = duration_graph_2[assignment.to_.value]
             except:
-                pass #Da mettere cost_graph_1, 2
+                n1 = cost_graph_1[assignment.from_.value]
+                n2 = cost_graph_2[assignment.to_.value]
 
             print(
                 f"Map value {n1.identifier} with value {n1.value} of {n1.graph} to value {n2.identifier} with value {n2.value} of {n2.graph}")
