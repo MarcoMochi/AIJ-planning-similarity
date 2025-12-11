@@ -134,7 +134,7 @@ empty = False
 
 def extract_numbers(value):
     try:
-        return re.search('\d+', value).group()
+        return re.search(r"\d+", value).group()
     except AttributeError:
         return ""
 
