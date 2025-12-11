@@ -1,0 +1,2 @@
+Main-Class: PDDLParser
+Class-Path: lib/pddl4j-4.0.0.jar
