@@ -1,7 +1,40 @@
 # AIJ - Paper
  Code and Experiments for the paper ""
 
-Installation instructions for different Operating Systems building from sources or using Anaconda for Clingo can be found here: https://github.com/potassco/clingo/blob/master/INSTALL.md, https://potassco.org/clingo/, https://github.com/potassco/clingo/releases/
+This repository contains the implementation, graph generators, ASP translations,
+and experimental material used in the paper. It includes tools to
+convert PDDL domains into graph structures, translate them into ASP, and run analyses
+with Clingo.
+
+---
+
+## Installation
+
+Run the setup script:
+
+```bash
+./setup.sh
+```
+
+This will:
+
+- Create/update the conda environment `asp-planning`
+- Install Clingo, Tarski, and dependencies
+- Install the local `pyspel` package
+
+Activate the environment:
+
+```bash
+conda activate asp-planning
+```
+
+Check Clingo:
+
+```bash
+clingo --version
+```
+
+To manually install clingo you can check instructions for different Operating Systems building from sources or using Anaconda for Clingo can be found here: https://github.com/potassco/clingo/blob/master/INSTALL.md, https://potassco.org/clingo/, https://github.com/potassco/clingo/releases/
 
 There are 5 main folders:
  - src: containing the python code for the translation and the code to obtain the graphs files

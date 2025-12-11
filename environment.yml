@@ -1,0 +1,11 @@
+name: asp-planning
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.9
+  - clingo          
+  - tarski          
+  - pip
+  - pip:
+      - networkx    
+      - tqdm   
