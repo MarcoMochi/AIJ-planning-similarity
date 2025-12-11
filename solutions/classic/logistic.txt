@@ -1,0 +1,17 @@
+Map node "at-t" of type "Predicate" with elements "L1,T1" of "logistics1.pddl" to node "at-t" of type "Predicate" with elements "L1,T1" of "logistics1-2.pddl" 
+Map node "Load" of type "Operator" with elements "L1,P1,T1" of "logistics1.pddl" to node "Load" of type "Operator" with elements "L1,P1,T1" of "logistics1-2.pddl" 
+Map node "at-p" of type "Predicate" with elements "L1,P1" of "logistics1.pddl" to node "at-p" of type "Predicate" with elements "L1,P1" of "logistics1-2.pddl" 
+Map node "in-p" of type "Predicate" with elements "P1,T1" of "logistics1.pddl" to node "in-p" of type "Predicate" with elements "P1,T1" of "logistics1-2.pddl" 
+Map node "Unload" of type "Operator" with elements "L1,P1,T1" of "logistics1.pddl" to node "Unload" of type "Operator" with elements "L1,P1,T1" of "logistics1-2.pddl" 
+Map node "move" of type "Operator" with elements "C1,L1,L2,T1" of "logistics1.pddl" to node "move" of type "Operator" with elements "C1,L1,L2,T1" of "logistics1-2.pddl" 
+Map node "in-city" of type "Predicate" with elements "C1,L1" of "logistics1.pddl" to node "in-city" of type "Predicate" with elements "C1,L1" of "logistics1-2.pddl" 
+Map node "move-Load" of type "Operator" with elements "C1,L1,L2,P1,T1" of "logistics1.pddl" to node "move-Load" of type "Operator" with elements "C1,L1,L2,P1,T1" of "logistics1-2.pddl" 
+Add node "move-Load" of type "Operator" with elements "C1,L1,L2,P1,T1" in "logistics1.pddl" 
+Add edge of type "pre" in "logistics1.pddl" from "move-Load" to "at-t" with the relations Ta1=Tb2,La2=Lb3 
+Add edge of type "pre" in "logistics1.pddl" from "move-Load" to "in-city" with the relations La1=Lb3,Ca2=Cb5 
+Add edge of type "pre" in "logistics1.pddl" from "move-Load" to "in-city" with the relations La1=Lb4,Ca2=Cb5 
+Add edge of type "pre" in "logistics1.pddl" from "move-Load" to "at-p" with the relations Pa1=Pb1,La2=Lb4 
+Add edge of type "del" in "logistics1.pddl" from "move-Load" to "at-t" with the relations Ta1=Tb2,La2=Lb3 
+Add edge of type "add" in "logistics1.pddl" from "move-Load" to "at-t" with the relations Ta1=Tb2,La2=Lb4 
+Add edge of type "del" in "logistics1.pddl" from "move-Load" to "at-p" with the relations Pa1=Pb1,La2=Lb4 
+Add edge of type "add" in "logistics1.pddl" from "move-Load" to "in-p" with the relations Pa1=Pb1,Ta2=Tb2 

@@ -148,7 +148,7 @@ def check_existence(graph, label, relation):
 
 def read_graphs(path, preprocessing):
     global g1, g2, empty
-    with open(path, 'r') as f:
+    with (open(path, 'r') as f):
         lines = f.readlines()
         assert len(lines) > 0, "Input file is empty"
         mode = 0
@@ -194,7 +194,12 @@ def read_graphs(path, preprocessing):
                     value = ",".join(v2)
 
                 if mode == 1:
-                    type_node = type_g1[str(len(nodes_graph_1))]
+                    type_node = None
+                    try:
+                        type_node = type_g1[str(len(nodes_graph_1))]
+                    except:
+                        type_g1[str(len(nodes_graph_1))] = predicate
+                        type_node = type_g1[str(len(nodes_graph_1))]
                     if len(value) >= 0:
                         try:
                             elements.append([value, type_g1[str(len(nodes_graph_1))]])
@@ -219,7 +224,12 @@ def read_graphs(path, preprocessing):
                                          type_node=f'type({type_node})', name=params[0],
                                          notes=('empty', 'empty')))
                 else:
-                    type_node = type_g2[str(len(nodes_graph_2) + count_lines)]
+                    type_node = None
+                    try:
+                        type_node = type_g2[str(len(nodes_graph_2) + count_lines)]
+                    except:
+                        type_g2[str(len(nodes_graph_2) + count_lines)] = predicate
+                        type_node = type_g2[str(len(nodes_graph_2) + count_lines)]
                     try:
                         elements.append([value, type_g2[str(len(nodes_graph_2) + count_lines)]])
                         if preprocessing:
@@ -521,11 +531,11 @@ def add_nodes_ctl(preprocessing):
     n_op2 = len([node for node in nodes_graph_2 if "Operator" in node.type_node.value])
     if len(nodes_graph_1) > len(nodes_graph_2):
         immutable = g1
-        add_nodes(nodes_graph_1, nodes_graph_2, duration_graph_1, duration_graph_2, g2, n_op1 < n_op2, preprocessing)
+        add_nodes(nodes_graph_1, nodes_graph_2, duration_graph_1, duration_graph_2, [], [], g2, n_op1 < n_op2, preprocessing)
         # add_durations(duration_graph_1, duration_graph_2, g2, preprocessing)
     else:
         immutable = g2
-        add_nodes(nodes_graph_2, nodes_graph_1, duration_graph_2, duration_graph_1, g1, n_op2 < n_op1, preprocessing)
+        add_nodes(nodes_graph_2, nodes_graph_1, duration_graph_2, duration_graph_1, [], [], g1, n_op2 < n_op1,  preprocessing)
         # add_durations(duration_graph_2, duration_graph_1, g1, preprocessing)
 
 
