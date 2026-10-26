@@ -1,5 +1,5 @@
 # AIJ - Paper
- Code and Experiments for the paper ""
+ Code and Experiments for the paper "Similarity of planning domain models via answer set programming" published in the Journal of Artificial Intelligence.
 
 This repository contains the implementation, graph generators, ASP translations,
 and experimental material used in the paper. It includes tools to
