@@ -1,5 +1,6 @@
 # AIJ - Paper
- Code and Experiments for the paper "Similarity of planning domain models via answer set programming" published in the Journal of Artificial Intelligence.
+ Code and Experiments for the paper:
+* Chrpa, L., Dodaro, C., Maratea, M., Mochi, M., & Vallati, M. (2026). Similarity of planning domain models via answer set programming. *Artificial Intelligence*, 104620. [DOI: 10.1016/j.artint.2026.104620](https://doi.org/10.1016/j.artint.2026.104620)
 
 This repository contains the implementation, graph generators, ASP translations,
 and experimental material used in the paper. It includes tools to
